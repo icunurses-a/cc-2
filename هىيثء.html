@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديث الموقع</title>
+    <!-- استدعاء خط Cairo من قوقل -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 50px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.85;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 100px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .time-box span {
+            display: block;
+        }
+
+        .time-box .number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffda79;
+        }
+
+        .time-box .label {
+            font-size: 1rem;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        /* تصميم رسالة الانتهاء */
+        #expired-message {
+            display: none;
+            font-size: 2rem;
+            color: #4cd137;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        
+        /* استجابة الشاشات الصغيرة */
+        @media (max-width: 480px) {
+            .time-box {
+                min-width: 80px;
+                padding: 15px;
+            }
+            .time-box .number {
+                font-size: 2rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>نحن نُجري بعض التحديثات!</h1>
+        <p>نعمل حالياً على تطوير الصفحة وتحسين تجربتكم. سنعود للعمل قريباً جداً خلال:</p>
+        
+        <div class="countdown" id="countdown">
+            <div class="time-box">
+                <span class="number" id="hours">00</span>
+                <span class="label">ساعة</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">00</span>
+                <span class="label">دقيقة</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">00</span>
+                <span class="label">ثانية</span>
+            </div>
+        </div>
+
+        <div id="expired-message">تم الانتهاء من التحديث، أهلاً بكم!</div>
+    </div>
+
+    <script>
+        // تحديد تاريخ النهاية: 29 أكتوبر 2026 الساعة 3:00 صباحاً بتوقيت مكة (UTC+3)
+        // يتم استخدام صيغة ISO لضمان دقة التوقيت
+        const targetDate = new Date("2026-10-29T03:00:00+03:00").getTime();
+
+        const countdownTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // حساب الساعات، الدقائق، والثواني
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // إضافة صفر على اليسار إذا كان الرقم أصغر من 10
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            // عند انتهاء العداد
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("countdown").style.display = "none";
+                document.getElementById("expired-message").style.display = "block";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
