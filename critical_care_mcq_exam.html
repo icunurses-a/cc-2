@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Critical Care Nursing ♥</title>
+<style>
+/* ============ THEME VARIABLES ============ */
+:root{
+  --bg-1:#0f2027;
+  --bg-2:#203a43;
+  --bg-3:#2c5364;
+  --primary:#4facfe;
+  --accent:#00f2fe;
+  --success:#2ecc71;
+  --danger:#ff5e62;
+  --warn:#f9d423;
+  --text:#1f2933;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --font-base:16px;
+  --font-family:'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --radius:14px;
+  --shadow:0 8px 30px rgba(0,0,0,0.12);
+}
+[data-theme="ocean"]{
+  --bg-1:#0f2027; --bg-2:#203a43; --bg-3:#2c5364;
+  --primary:#4facfe; --accent:#00f2fe;
+}
+[data-theme="sunset"]{
+  --bg-1:#ff512f; --bg-2:#dd2476; --bg-3:#ff512f;
+  --primary:#ffd66b; --accent:#ff8c00;
+}
+[data-theme="forest"]{
+  --bg-1:#134e5e; --bg-2:#71b280; --bg-3:#134e5e;
+  --primary:#a8e063; --accent:#56ab2f;
+}
+[data-theme="lavender"]{
+  --bg-1:#5f2c82; --bg-2:#49a09d; --bg-3:#5f2c82;
+  --primary:#c471ed; --accent:#12c2e9;
+}
+[data-theme="dark"]{
+  --bg-1:#0b0f19; --bg-2:#1b2238; --bg-3:#0b0f19;
+  --primary:#7f5af0; --accent:#2cb67d;
+  --text:#e8eef7; --card:#161b2c; --border:#2a3350;
+}
+[data-theme="light"]{
+  --bg-1:#f5f7fa; --bg-2:#e9eef5; --bg-3:#f5f7fa;
+  --primary:#4a90e2; --accent:#50c9ce;
+  --text:#1f2933; --card:#ffffff; --border:#e2e8f0;
+}
+[data-theme="candy"]{
+  --bg-1:#fc466b; --bg-2:#3f5efb; --bg-3:#fc466b;
+  --primary:#ffe066; --accent:#ff6b9d;
+}
+[data-theme="aurora"]{
+  --bg-1:#00c9ff; --bg-2:#92fe9d; --bg-3:#00c9ff;
+  --primary:#5ee7df; --accent:#b490ca;
+}
+[data-theme="midnight"]{
+  --bg-1:#232526; --bg-2:#414345; --bg-3:#232526;
+  --primary:#6dd5ed; --accent:#2193b0;
+}
+[data-theme="rose"]{
+  --bg-1:#c31432; --bg-2:#240b36; --bg-3:#c31432;
+  --primary:#ff6b6b; --accent:#ffd93d;
+}
+[data-theme="mint"]{
+  --bg-1:#0f9b8e; --bg-2:#b8d995; --bg-3:#0f9b8e;
+  --primary:#88d4ab; --accent:#5cab7c;
+}
+[data-theme="tropical"]{
+  --bg-1:#fa709a; --bg-2:#fee140; --bg-3:#fa709a;
+  --primary:#fff3b0; --accent:#ff8e3c;
+}
+[data-theme="galaxy"]{
+  --bg-1:#0f0c29; --bg-2:#302b63; --bg-3:#24243e;
+  --primary:#fd746c; --accent:#ffc370;
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:var(--font-base)}
+body{
+  font-family:var(--font-family);
+  color:var(--text);
+  /* Multi-layer animated background: gradient + two soft radial highlights + animated sweep */
+  background:
+    radial-gradient(circle at 18% 28%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 42%),
+    radial-gradient(circle at 82% 72%, color-mix(in srgb, var(--primary) 20%, transparent) 0%, transparent 46%),
+    linear-gradient(135deg,var(--bg-1),var(--bg-2),var(--bg-3));
+  background-size: 130% 130%, 140% 140%, 400% 400%;
+  animation: bgFlow 22s ease infinite, bgGlowPulse 14s ease-in-out infinite alternate;
+  min-height:100vh;
+  transition:color .3s, background .5s;
+  overflow-x:hidden;
+  position:relative;
+}
+/* Layered soft glow blobs drifting in the background */
+.bg-glow-blobs{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.bg-glow-blobs span{
+  position:absolute;border-radius:50%;filter:blur(70px);
+  background:radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  opacity:.22;mix-blend-mode:screen;
+  animation: glowDrift 28s ease-in-out infinite;
+}
+.bg-glow-blobs span:nth-child(2){background:radial-gradient(circle, var(--accent) 0%, transparent 70%);animation-duration:34s;animation-delay:-9s;opacity:.2}
+.bg-glow-blobs span:nth-child(3){background:radial-gradient(circle, #ffffff 0%, transparent 70%);animation-duration:40s;animation-delay:-18s;opacity:.12}
+.bg-glow-blobs span:nth-child(4){background:radial-gradient(circle, var(--primary) 0%, transparent 70%);animation-duration:46s;animation-delay:-22s;width:400px;height:400px;opacity:.18}
+@keyframes glowDrift{
+  0%,100%{transform:translate(0,0) scale(1)}
+  25%{transform:translate(140px,-100px) scale(1.35)}
+  50%{transform:translate(-60px,140px) scale(.85)}
+  75%{transform:translate(-180px,-60px) scale(1.2)}
+}
+@keyframes bgGlowPulse{
+  0%{background-position:0% 50%, 100% 50%, 0% 50%}
+  50%{background-position:30% 70%, 70% 30%, 100% 50%}
+  100%{background-position:0% 50%, 100% 50%, 0% 50%}
+}
+/* Subtle vignette + grain for depth */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,.18) 100%);
+}
+[data-theme="light"] body, [data-theme="forest"] body, [data-theme="candy"] body, [data-theme="lavender"] body, [data-theme="sunset"] body, [data-theme="aurora"] body, [data-theme="mint"] body, [data-theme="tropical"] body, [data-theme="rose"] body, [data-theme="galaxy"] body{ color:#fff; text-shadow:0 1px 4px rgba(0,0,0,.35); }
+[data-theme="dark"] body, [data-theme="midnight"] body{ color:#e8eef7 }
+[data-theme="light"] body{ color:#1f2933; text-shadow:none; }
+
+@keyframes bgFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* Floating bg bubbles (upgraded with parallax + horizontal sway) */
+.bg-bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-bubbles span{
+  display:block;
+  position:absolute;
+  bottom:-160px;
+  width:60px;height:60px;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,255,255,.06) 60%, transparent 70%);
+  border-radius:50%;
+  box-shadow:inset 0 0 12px rgba(255,255,255,.18), 0 0 20px rgba(255,255,255,.08);
+  animation:bubbleUp linear infinite, swaySide 8s ease-in-out infinite alternate;
+}
+@keyframes bubbleUp{
+  0%{transform:translateY(0) scale(1);opacity:.0}
+  10%{opacity:1}
+  100%{transform:translateY(-110vh) scale(1.3);opacity:0}
+}
+@keyframes swaySide{
+  0%{margin-left:0}
+  100%{margin-left:30px}
+}
+
+/* ============ LAYOUT ============ */
+.app{position:relative;z-index:5;max-width:1100px;margin:0 auto;padding:24px 16px 80px}
+header.app-header{
+  text-align:center;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.45);
+  margin-bottom:18px;
+  padding:18px 0 6px;
+  animation:fadeUp .6s ease both;
+}
+header.app-header h1{
+  font-size:2.2rem;font-weight:800;letter-spacing:.5px;
+  background:linear-gradient(135deg,#fff 0%, color-mix(in srgb, var(--accent) 80%, #fff) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-fill-color:transparent;
+  display:inline-block;
+}
+/* Header pulsing heart */
+.heart{
+  display:inline-block;color:#ff6b9d;font-size:1.05em;
+  animation:heartBeat 1.4s ease-in-out infinite;
+  text-shadow:0 0 18px rgba(255,107,157,.65), 0 0 32px rgba(255,107,157,.4);
+  margin-left:6px;vertical-align:middle;
+  -webkit-text-fill-color:#ff6b9d; /* override clip for the heart */
+}
+@keyframes heartBeat{
+  0%,100%{transform:scale(1)}
+  14%{transform:scale(1.35)}
+  28%{transform:scale(1)}
+  42%{transform:scale(1.35)}
+  70%{transform:scale(1)}
+}
+/* Footer with love */
+.footer-love{
+  text-align:center;margin-top:60px;padding:36px 20px 12px;
+  color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.45);
+  position:relative;z-index:5;
+}
+.footer-love::before{
+  content:'';display:block;width:80%;max-width:300px;height:1px;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--primary) 60%,#fff),transparent);
+  margin:0 auto 24px;
+}
+.footer-love p{font-size:1rem;font-weight:700;letter-spacing:1.5px;opacity:.95}
+.footer-love .heart{font-size:1.1em;margin:0 4px}
+.footer-love .author{display:block;margin-top:6px;font-size:1.15rem;font-weight:800;letter-spacing:2px;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+
+/* ============ SETUP PANEL ============ */
+.panel{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:22px;
+  margin-bottom:18px;
+  animation:fadeUp .45s ease both;
+}
+[data-theme="light"] .panel, [data-theme="forest"] .panel, [data-theme="candy"] .panel, [data-theme="lavender"] .panel, [data-theme="sunset"] .panel, [data-theme="ocean"] .panel, [data-theme="aurora"] .panel, [data-theme="mint"] .panel, [data-theme="tropical"] .panel, [data-theme="rose"] .panel, [data-theme="galaxy"] .panel{ color:#1f2933; text-shadow:none; }
+[data-theme="dark"] .panel, [data-theme="midnight"] .panel{ color:#e8eef7 }
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.panel h2{font-size:1.15rem;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.panel h2::before{content:"⚙️"}
+
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.ctrl label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;opacity:.85}
+.ctrl select, .ctrl input[type="range"], .ctrl input[type="number"]{
+  width:100%;padding:9px 11px;border-radius:9px;border:1.5px solid var(--border);
+  background:#fff;color:var(--text);font-size:.92rem;font-family:inherit;
+}
+.ctrl input[type="range"]{padding:0;height:32px}
+.ctrl .hint{font-size:.75rem;opacity:.7;margin-top:4px}
+.range-row{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;margin-top:4px;color:var(--primary);font-weight:700}
+
+.toggle-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.toggle{
+  display:flex;align-items:center;gap:8px;
+  background:color-mix(in srgb, var(--primary) 6%, rgba(255,255,255,.65));
+  color:var(--text);
+  padding:8px 14px;border-radius:22px;font-size:.82rem;font-weight:600;cursor:pointer;
+  border:1.5px solid color-mix(in srgb, var(--primary) 25%, var(--border));
+  transition:all .2s;user-select:none;backdrop-filter:blur(6px);
+}
+.toggle:hover{
+  background:color-mix(in srgb, var(--primary) 16%, rgba(255,255,255,.8));
+  border-color:color-mix(in srgb, var(--primary) 50%, var(--border));
+  transform:translateY(-1px);
+}
+.toggle.active{
+  background:linear-gradient(135deg, var(--primary), var(--accent));
+  color:#fff;border-color:transparent;
+  box-shadow:0 4px 14px -3px color-mix(in srgb, var(--primary) 60%, transparent);
+}
+.toggle input{display:none}
+
+.btn{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;border:none;border-radius:12px;padding:12px 26px;font-size:1rem;
+  font-weight:700;cursor:pointer;font-family:inherit;transition:all .25s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 6px 18px -2px color-mix(in srgb, var(--primary) 45%, transparent),
+             0 2px 8px rgba(0,0,0,.14),
+             inset 0 1px 0 rgba(255,255,255,.28);
+  letter-spacing:.3px;position:relative;overflow:hidden;
+}
+.btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.4) 50%, transparent 70%);
+  transform:translateX(-100%);transition:transform .65s;
+}
+.btn:hover::before{transform:translateX(100%)}
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 28px -3px color-mix(in srgb, var(--primary) 55%, transparent),
+             0 4px 12px rgba(0,0,0,.18),
+             inset 0 1px 0 rgba(255,255,255,.32);
+  filter:brightness(1.08);
+}
+.btn:active{transform:translateY(0);filter:brightness(.96)}
+.btn-ghost{
+  background:color-mix(in srgb, var(--primary) 8%, transparent);
+  color:var(--text);
+  border:1.5px solid color-mix(in srgb, var(--primary) 35%, var(--border));
+  box-shadow:0 2px 8px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.15);
+  backdrop-filter:blur(8px);
+}
+.btn-ghost::before{display:none}
+.btn-ghost:hover{
+  background:color-mix(in srgb, var(--primary) 18%, transparent);
+  border-color:var(--primary);
+  color:var(--primary);
+  transform:translateY(-2px);
+  box-shadow:0 6px 16px -3px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.actions-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+/* ============ TEST AREA ============ */
+#testArea{display:none}
+.progress-wrap{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:14px;box-shadow:var(--shadow);
+  position:sticky;top:8px;z-index:5;
+}
+.progress-info{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;font-weight:600;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.progress-bar{height:10px;background:#e2e8f0;border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0;transition:width .35s ease}
+.score-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.chip{padding:4px 10px;border-radius:14px;font-size:.75rem;font-weight:700}
+.chip.ok{background:rgba(46,204,113,.18);color:#1d8a4a}
+.chip.bad{background:rgba(255,94,98,.18);color:#c0353a}
+.chip.info{background:rgba(79,172,254,.18);color:#1e6fb8}
+
+/* Question card */
+.qcard{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;
+  animation:fadeUp .4s ease both;
+}
+.qcard .qmeta{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;font-weight:700;color:var(--primary);margin-bottom:8px;flex-wrap:wrap;gap:6px}
+.qcard .qtext{font-size:1.05rem;line-height:1.55;margin-bottom:14px;font-weight:600}
+.qcard .qtext .num{display:inline-block;background:var(--primary);color:#fff;border-radius:8px;padding:1px 9px;margin-right:8px;font-size:.85rem}
+.options{display:grid;gap:8px}
+.opt{
+  display:flex;gap:10px;align-items:center;padding:11px 14px;border:1.5px solid var(--border);
+  border-radius:10px;cursor:pointer;font-size:.96rem;line-height:1.4;transition:.18s;background:#fff;
+  user-select:none;
+}
+.opt:hover{border-color:var(--primary);background:#f8fbff}
+.opt .key{flex:0 0 26px;height:26px;border-radius:50%;background:#f1f5f9;color:#475569;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem}
+.opt.correct{background:rgba(46,204,113,.16);border-color:#2ecc71;color:#1d8a4a}
+.opt.correct .key{background:#2ecc71;color:#fff}
+.opt.wrong{background:rgba(255,94,98,.15);border-color:#ff5e62;color:#c0353a}
+.opt.wrong .key{background:#ff5e62;color:#fff}
+.opt.disabled{cursor:not-allowed;opacity:.95}
+.opt.disabled:hover{border-color:var(--border);background:#fff}
+.explain{margin-top:10px;padding:10px 12px;border-left:4px solid var(--accent);background:#f8fbff;border-radius:6px;font-size:.86rem;line-height:1.5;display:none}
+.explain.show{display:block;animation:fadeUp .3s ease}
+.explain b{color:var(--primary)}
+
+/* Question grid (list mode shortcut nav) */
+.qnav{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.qnav button{
+  width:30px;height:30px;border-radius:7px;border:1.5px solid var(--border);
+  background:#fff;color:#475569;font-weight:700;font-size:.78rem;cursor:pointer;transition:.15s;
+}
+.qnav button.done-ok{background:#2ecc71;color:#fff;border-color:#2ecc71}
+.qnav button.done-bad{background:#ff5e62;color:#fff;border-color:#ff5e62}
+.qnav button.cur{outline:2px solid var(--primary);outline-offset:1px}
+
+/* ============ COLLAPSE / NAV CONTROL UI ============ */
+.nav-controls{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);
+}
+.nav-controls .btn-mini{
+  background:color-mix(in srgb, var(--primary) 8%, #f1f5f9);
+  color:var(--text);
+  border:1.5px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius:9px;padding:7px 12px;font-size:.78rem;font-weight:700;
+  cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:5px;
+  box-shadow:0 2px 6px rgba(0,0,0,.05), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.nav-controls .btn-mini:hover{
+  background:linear-gradient(135deg, var(--primary), var(--accent));
+  color:#fff;border-color:transparent;
+  transform:translateY(-1px);
+  box-shadow:0 5px 14px -2px color-mix(in srgb, var(--primary) 55%, transparent);
+}
+.nav-controls .nav-hint{font-size:.74rem;opacity:.7}
+.qnav-wrap{max-height:220px;overflow:hidden;transition:max-height .35s ease}
+.qnav-wrap.collapsed{max-height:0;overflow:hidden;margin-top:0!important;padding-top:0!important}
+.qnav-wrap.collapsed .qnav{display:none}
+.collapse-arrow{transition:transform .25s ease}
+.qnav-wrap.collapsed + .nav-controls .collapse-arrow,
+.nav-controls.collapsed-control .collapse-arrow{transform:rotate(-90deg)}
+
+/* Per-question collapse (list mode) */
+.qcard .card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.qcard .card-toggle{
+  flex:0 0 auto;background:#f1f5f9;border:1.5px solid var(--border);border-radius:8px;
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-weight:700;font-size:.95rem;color:#475569;transition:.18s;
+}
+.qcard .card-toggle:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.qcard .card-toggle .chev{transition:transform .25s;display:inline-block}
+.qcard.collapsed{padding:14px 20px}
+.qcard.collapsed .options, .qcard.collapsed .explain{display:none}
+.qcard.collapsed .qtext{margin-bottom:0;opacity:.85}
+.qcard.collapsed .card-toggle .chev{transform:rotate(-90deg)}
+.qcard.collapsed .qmeta .mini-status{margin-left:auto;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:10px}
+.qcard.collapsed .qmeta .mini-status.ok{background:rgba(46,204,113,.2);color:#1d8a4a}
+.qcard.collapsed .qmeta .mini-status.bad{background:rgba(255,94,98,.2);color:#c0353a}
+.qcard.collapsed .qmeta .mini-status.pending{background:rgba(79,172,254,.18);color:#1e6fb8}
+
+/* ============ NEW BG ANIMATION VARIANTS ============ */
+.bg-bubbles.snow span{
+  width:8px;height:8px;background:#fff;border-radius:50%;opacity:.7;
+  filter:blur(.4px);
+}
+.bg-bubbles.stars span{
+  width:3px;height:3px;background:#fff;border-radius:50%;
+  box-shadow:0 0 6px #fff,0 0 12px #fff;opacity:.9;
+}
+.bg-bubbles.hearts span{
+  background:transparent;width:auto;height:auto;font-size:1.4rem;color:rgba(255,107,157,.6);
+}
+.bg-bubbles.shapes span{
+  background:transparent;border-radius:0;width:24px;height:24px;border:2px solid rgba(255,255,255,.25);
+}
+.bg-bubbles.shapes span:nth-child(3n){border-radius:50%}
+.bg-bubbles.shapes span:nth-child(3n+1){transform:rotate(45deg)}
+.bg-bubbles.leaves span{
+  background:transparent;width:auto;height:auto;font-size:1.6rem;color:rgba(120,200,100,.55);
+}
+.bg-bubbles.matrix span{
+  width:10px;height:14px;background:transparent;color:rgba(0,255,120,.65);font-family:monospace;
+  font-size:.9rem;font-weight:700;border-radius:0;display:flex;align-items:center;justify-content:center;
+}
+
+/* ============ CELEBRATION ENHANCEMENTS ============ */
+.celebrate.s-large{font-size:11rem}
+.celebrate.s-small{font-size:5rem}
+.celebrate.s-medium{font-size:8rem}
+.celebrate.fast{animation-duration:.8s}
+.celebrate.slow{animation-duration:1.8s}
+.celebrate .glow{
+  position:absolute;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,currentColor 0%,transparent 65%);
+  opacity:.5;animation:glowPulse 1.1s ease-out forwards;filter:blur(8px);
+}
+@keyframes glowPulse{
+  0%{transform:scale(.2);opacity:.6}
+  50%{transform:scale(1.2);opacity:.4}
+  100%{transform:scale(2);opacity:0}
+}
+.celebrate .ring2{
+  position:absolute;width:200px;height:200px;border-radius:50%;
+  border:3px dashed currentColor;opacity:.6;
+  animation:ringSpin 1.2s ease-out forwards;
+}
+@keyframes ringSpin{
+  0%{transform:scale(.2) rotate(0)}
+  100%{transform:scale(1.5) rotate(360deg);opacity:0}
+}
+
+
+/* ============ CENTER CELEBRATION OVERLAY ============ */
+#centerFx{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  pointer-events:none;z-index:60;
+}
+.celebrate{
+  font-size:8rem;
+  animation:celebPop 1.2s cubic-bezier(.2,1.4,.4,1) forwards;
+  filter:drop-shadow(0 6px 20px rgba(0,0,0,.25));
+}
+@keyframes celebPop{
+  0%{transform:scale(.2) rotate(-15deg);opacity:0}
+  20%{transform:scale(1.4) rotate(8deg);opacity:1}
+  50%{transform:scale(1.1) rotate(-3deg);opacity:1}
+  80%{transform:scale(1.25) rotate(2deg);opacity:.95}
+  100%{transform:scale(1.8) rotate(0);opacity:0}
+}
+.celebrate .ring{
+  position:absolute;width:260px;height:260px;border-radius:50%;
+  border:6px solid currentColor;opacity:.5;
+  animation:ringExpand 1.1s ease-out forwards;
+}
+@keyframes ringExpand{
+  0%{transform:scale(.2);opacity:.7}
+  100%{transform:scale(1.6);opacity:0}
+}
+.celebrate .label{
+  position:absolute;top:60%;left:50%;transform:translateX(-50%);
+  font-size:1.4rem;font-weight:800;letter-spacing:1px;white-space:nowrap;
+  text-shadow:0 2px 6px rgba(0,0,0,.4);
+}
+
+/* Floating click particles */
+.fx-particle{position:fixed;pointer-events:none;z-index:55;font-size:1.4rem;animation:floatUp 1.1s ease-out forwards}
+@keyframes floatUp{
+  0%{opacity:1;transform:translateY(0) scale(.6)}
+  100%{opacity:0;transform:translateY(-110px) scale(1.4)}
+}
+
+/* Firework particle */
+.fw{position:fixed;width:6px;height:6px;border-radius:50%;pointer-events:none;z-index:55}
+
+/* ============ RESULTS SCREEN ============ */
+#results{display:none}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:30px;text-align:center;animation:fadeUp .5s ease}
+.result-card .big{font-size:3.4rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.result-card .grade{font-size:1.4rem;margin-top:6px;font-weight:700}
+.result-stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:18px}
+.stat{background:#f8fbff;border:1px solid var(--border);border-radius:12px;padding:14px 18px;min-width:110px}
+.stat .v{font-size:1.4rem;font-weight:800;color:var(--primary)}
+.stat .l{font-size:.78rem;opacity:.75;margin-top:2px}
+
+/* Confetti for celebration */
+.confetti{position:fixed;width:10px;height:14px;top:-20px;z-index:70;pointer-events:none;border-radius:2px}
+
+/* ============ STUDY MODE ============ */
+#studyArea{display:none}
+.study-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:12px;animation:fadeUp .35s ease both}
+.study-card .stitle{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:6px}
+.study-card .sq{font-size:1.02rem;line-height:1.55;margin-bottom:8px;font-weight:600}
+.study-card .sa{font-size:.92rem;line-height:1.5;background:#f1faf4;border-left:4px solid #2ecc71;padding:8px 12px;border-radius:6px}
+.study-card .sa b{color:#1d8a4a}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.filter-row button{padding:7px 14px;border-radius:18px;border:1.5px solid var(--border);background:#fff;color:#475569;cursor:pointer;font-size:.82rem;font-weight:600}
+.filter-row button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:640px){
+  header.app-header h1{font-size:1.4rem}
+  .qcard{padding:14px}
+  .qcard .qtext{font-size:1rem}
+  .opt{font-size:.9rem;padding:10px}
+  .celebrate{font-size:5.5rem}
+}
+.font-toggle-bar{display:flex;gap:6px;align-items:center;justify-content:center;margin-bottom:12px;flex-wrap:wrap;position:relative;z-index:5}
+.font-toggle-bar button{
+  background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 22%, transparent), color-mix(in srgb, var(--accent) 22%, transparent));
+  color:#fff;border:1px solid color-mix(in srgb, var(--primary) 45%, transparent);
+  border-radius:9px;padding:6px 13px;font-weight:700;cursor:pointer;transition:all .18s;
+  backdrop-filter:blur(8px);text-shadow:0 1px 3px rgba(0,0,0,.35);
+  box-shadow:0 2px 8px -2px color-mix(in srgb, var(--primary) 40%, transparent), inset 0 1px 0 rgba(255,255,255,.2);
+}
+.font-toggle-bar button:hover{
+  background:linear-gradient(135deg, var(--primary), var(--accent));
+  transform:translateY(-1px);
+  box-shadow:0 5px 14px -2px color-mix(in srgb, var(--primary) 55%, transparent);
+}
+.font-toggle-bar .ind{font-size:.82rem;opacity:.9;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+
+/* Custom scrollbar */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:5px}
+::-webkit-scrollbar-track{background:transparent}
+
+hr.sep{border:none;border-top:1px dashed var(--border);margin:16px 0}
+
+.kbd{display:inline-block;padding:1px 6px;border-radius:4px;background:#eef2f7;border:1px solid var(--border);font-family:monospace;font-size:.78rem}
+.muted{opacity:.65;font-size:.78rem}
+</style>
+</head>
+<body data-theme="ocean">
+<div class="bg-bubbles" id="bgBubbles"></div>
+<div class="bg-glow-blobs"><span></span><span></span><span></span><span></span></div>
+
+<div class="app">
+  <header class="app-header">
+    <h1>Critical Care Nursing <span class="heart">♥</span></h1>
+  </header>
+
+  <!-- Font size quick toggle -->
+  <div class="font-toggle-bar">
+    <span class="ind">Font size:</span>
+    <button onclick="adjustFont(-2)" title="Decrease font">A−</button>
+    <button onclick="adjustFont(0)" title="Reset font">A</button>
+    <button onclick="adjustFont(2)" title="Increase font">A+</button>
+    <button onclick="adjustFont(6)" title="Extra large">A++</button>
+    <span class="ind" id="fontInd">16px</span>
+  </div>
+
+  <!-- ============ SETUP PANEL ============ -->
+  <section class="panel" id="setupPanel">
+    <h2>Exam Setup &amp; Customization</h2>
+    <div class="controls">
+      <div class="ctrl">
+        <label for="numQ">Number of MCQs (5–200)</label>
+        <input type="number" id="numQ" min="5" max="200" value="20">
+        <input type="range" id="numQRange" min="5" max="200" value="20" style="margin-top:6px">
+        <div class="range-row"><span>5</span><span id="numQVal">20</span><span>200</span></div>
+      </div>
+      <div class="ctrl">
+        <label for="topicFilter">Topic filter</label>
+        <select id="topicFilter">
+          <option value="all">All topics (mixed)</option>
+          <option value="L1">L1 · ICU Structure &amp; Scope</option>
+          <option value="L2">L2 · Nutrition in Critical Care</option>
+          <option value="W3">W3 · Pain, Sedation &amp; Delirium</option>
+          <option value="W4">W4 · ACS &amp; Cardiac Surgery</option>
+          <option value="W5">W5 · Cardiac Dysrhythmia</option>
+        </select>
+        <div class="hint">Pick a topic or test everything.</div>
+      </div>
+      <div class="ctrl">
+        <label for="displayMode">Display mode</label>
+        <select id="displayMode">
+          <option value="single">Single (one at a time)</option>
+          <option value="list">List (all visible, scroll)</option>
+        </select>
+        <div class="hint">List mode is good for revision.</div>
+      </div>
+      <div class="ctrl">
+        <label for="bgTheme">Background theme</label>
+        <select id="bgTheme">
+          <option value="ocean">Ocean (animated gradient)</option>
+          <option value="sunset">Sunset</option>
+          <option value="forest">Forest</option>
+          <option value="lavender">Lavender</option>
+          <option value="candy">Candy</option>
+          <option value="aurora">Aurora</option>
+          <option value="midnight">Midnight</option>
+          <option value="rose">Rose</option>
+          <option value="mint">Mint</option>
+          <option value="tropical">Tropical</option>
+          <option value="galaxy">Galaxy</option>
+          <option value="dark">Dark premium</option>
+          <option value="light">Light clean</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        <label for="bgAnim">Background animation</label>
+        <select id="bgAnim">
+          <option value="bubbles">Floating bubbles</option>
+          <option value="snow">❄ Snow falling</option>
+          <option value="stars">✨ Twinkling stars</option>
+          <option value="hearts">💖 Floating hearts</option>
+          <option value="shapes">▰ Floating shapes</option>
+          <option value="leaves">🍃 Drifting leaves</option>
+          <option value="matrix">1️⃣ Matrix code rain</option>
+          <option value="none">Static gradient</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        <label for="bgDensity">Animation density</label>
+        <input type="range" id="bgDensity" min="0" max="60" value="14">
+        <div class="range-row"><span>Sparse</span><span id="bgDensityVal">14</span><span>Dense</span></div>
+      </div>
+      <div class="ctrl">
+        <label for="clickFx">Click effect on answer</label>
+        <select id="clickFx">
+          <option value="emojis">Emojis (✅/❌ + topic emojis)</option>
+          <option value="stars">Stars</option>
+          <option value="bubbles">Bubbles</option>
+          <option value="fireworks">Fireworks</option>
+          <option value="hearts">Hearts</option>
+          <option value="confetti">Confetti burst</option>
+          <option value="mixed">Mixed (random per click)</option>
+          <option value="none">None</option>
+        </select>
+        <div class="hint">Plus the center scale-up celebration.</div>
+      </div>
+      <div class="ctrl">
+        <label for="centerFxSel">Center celebration style</label>
+        <select id="centerFxSel">
+          <option value="auto">Auto (✨ correct / 💥 wrong)</option>
+          <option value="stars">Stars always</option>
+          <option value="fireworks">Fireworks always</option>
+          <option value="emojis">Emoji burst</option>
+          <option value="confetti">Confetti burst</option>
+          <option value="trophy">🏆 Trophy + flash (correct only)</option>
+          <option value="minimal">Minimal text only</option>
+          <option value="off">Off (no center fx)</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        <label for="celebSize">Celebration size</label>
+        <select id="celebSize">
+          <option value="small">Small</option>
+          <option value="medium" selected>Medium</option>
+          <option value="large">Large</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        <label for="celebSpeed">Celebration speed</label>
+        <select id="celebSpeed">
+          <option value="fast">Fast (0.8s)</option>
+          <option value="normal" selected>Normal (1.2s)</option>
+          <option value="slow">Slow (1.8s)</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        <label for="celebIntensity">Celebration intensity</label>
+        <input type="range" id="celebIntensity" min="1" max="5" value="3">
+        <div class="range-row"><span>Subtle</span><span id="celebIntensityVal">3</span><span>Epic</span></div>
+      </div>
+      <div class="ctrl">
+        <label for="fontFamily">Font family</label>
+        <select id="fontFamily">
+          <option value="system-ui">System UI (default)</option>
+          <option value="'Segoe UI', sans-serif">Segoe UI</option>
+          <option value="'Trebuchet MS', sans-serif">Trebuchet</option>
+          <option value="Georgia, serif">Georgia (serif)</option>
+          <option value="'Courier New', monospace">Courier (mono)</option>
+          <option value="Verdana, sans-serif">Verdana</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <label class="toggle active" id="tShuffleQ"><input type="checkbox" checked>🔀 Shuffle questions</label>
+      <label class="toggle active" id="tShuffleA"><input type="checkbox" checked>🔀 Shuffle answer options</label>
+      <label class="toggle active" id="tShowExplain"><input type="checkbox" checked>📖 Show explanations after each answer</label>
+      <label class="toggle active" id="tImmediate"><input type="checkbox" checked>⚡ Instant feedback (color correct/wrong)</label>
+      <label class="toggle" id="tExamMode"><input type="checkbox">🤐 Exam mode (no instant feedback, score at end)</label>
+      <label class="toggle active" id="tSmooth"><input type="checkbox" checked>🌊 Smooth scrolling &amp; transitions</label>
+      <label class="toggle active" id="tCollapseNav"><input type="checkbox" checked>🔽 Collapsible question navigation</label>
+      <label class="toggle" id="tCollapseAnswered"><input type="checkbox">📦 Auto-collapse answered MCQs (list mode)</label>
+      <label class="toggle" id="tShowMiniStatus"><input type="checkbox" checked>🏷 Show mini status badges on collapsed cards</label>
+    </div>
+
+    <div class="actions-row">
+      <button class="btn" id="startBtn" onclick="startExam()">▶ Start Exam</button>
+      <button class="btn btn-ghost" onclick="openStudyMode()">📚 Study / Revision Mode</button>
+      <button class="btn btn-ghost" onclick="resetAll()">↺ Reset Everything</button>
+    </div>
+  </section>
+
+  <!-- ============ TEST AREA ============ -->
+  <section id="testArea">
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-info">
+        <span id="progLabel">Question 0 / 0</span>
+        <span id="progPct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="score-chips">
+        <span class="chip ok" id="chipCorrect">✓ 0</span>
+        <span class="chip bad" id="chipWrong">✗ 0</span>
+        <span class="chip info" id="chipRemaining">⏳ 0 remaining</span>
+      </div>
+      <div class="qnav-wrap" id="qnavWrap">
+        <div class="qnav" id="qnav"></div>
+      </div>
+      <div class="nav-controls" id="navControls">
+        <button class="btn-mini" id="navCollapseBtn" onclick="toggleNavCollapse()" title="Collapse / expand the question navigation grid">
+          <span class="collapse-arrow">▼</span> Toggle nav grid
+        </button>
+        <button class="btn-mini" onclick="collapseAllCards()" title="Collapse all question cards (list mode)">📦 Collapse all MCQs</button>
+        <button class="btn-mini" onclick="expandAllCards()" title="Expand all question cards (list mode)">📂 Expand all MCQs</button>
+        <button class="btn-mini" onclick="collapseAnsweredCards()" title="Auto-collapse all answered MCQs">✅ Collapse answered</button>
+        <button class="btn-mini" onclick="jumpToUnanswered()" title="Jump to the first unanswered MCQ">⏭ Next unanswered</button>
+        <span class="nav-hint">Use these to navigate collapsed / expanded MCQs quickly.</span>
+      </div>
+    </div>
+
+    <div id="questionContainer"></div>
+
+    <div class="actions-row">
+      <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display:none">Next ▶</button>
+      <button class="btn" id="prevBtn" onclick="prevQuestion()" style="display:none">◀ Previous</button>
+      <button class="btn btn-ghost" onclick="finishExam(true)">🏁 Finish &amp; Score</button>
+      <button class="btn btn-ghost" onclick="abortExam()">✕ Abort</button>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="results">
+    <div class="result-card">
+      <div class="big" id="scorePct">0%</div>
+      <div class="grade" id="gradeLabel">—</div>
+      <p class="muted" style="margin-top:6px" id="scoreDetail">0 / 0 correct</p>
+      <div class="result-stats" id="resultStats"></div>
+      <div class="actions-row" style="justify-content:center">
+        <button class="btn" onclick="retestFailed()">🔁 Retest only failed answers</button>
+        <button class="btn btn-ghost" onclick="restartSameConfig()">↻ Restart with same settings</button>
+        <button class="btn btn-ghost" onclick="goSetup()">⚙ Back to setup</button>
+        <button class="btn btn-ghost" onclick="reviewWrong()">👁 Review wrong answers</button>
+      </div>
+      <div id="reviewList" style="margin-top:24px;text-align:left"></div>
+    </div>
+  </section>
+
+  <!-- ============ STUDY MODE ============ -->
+  <section id="studyArea">
+    <div class="panel">
+      <h2>📚 Study / Revision Mode</h2>
+      <p class="muted">Browse all questions with answers and explanations — no scoring, no pressure. Filter by topic.</p>
+      <div class="filter-row" id="studyFilters"></div>
+      <input type="text" id="studySearch" placeholder="🔍 Search questions by keyword…" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:.92rem;margin:10px 0">
+      <div id="studyContainer"></div>
+      <div class="actions-row">
+        <button class="btn btn-ghost" onclick="goSetup()">← Back to setup</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer-love">
+    <p>MADE WITH LOVE <span class="heart">♥</span> : <span class="author">AMER ALSHARIF</span></p>
+  </footer>
+</div>
+
+<!-- Center celebration overlay -->
+<div id="centerFx"></div>
+
+<script>
+/* ============================================================
+   MCQ BANK — Critical Care Nursing (L1, L2, W3, W4, W5)
+   Each item: {id, topic, q, options[], answer (0-indexed), explain}
+   ============================================================ */
+const QUESTIONS = [
+/* ===== L1: Structure and Scope of Critical Care Nursing ===== */
+{id:1,topic:"L1",q:"According to the AACN, acute and critical care nursing is best defined as:","options":["The specialty that manages human responses to actual or potential life-threatening problems","The specialty focused solely on monitoring vital signs","The specialty that manages only postoperative patients","The specialty limited to emergency departments"],"answer":0,"explain":"The AACN defines acute and critical care nursing as the specialty that manages human responses to actual or potential life-threatening problems."},
+{id:2,topic:"L1",q:"Which ICU layout is recommended to enhance infection control, privacy, and family satisfaction?","options":["Open-bay layouts","Single-patient rooms","Double-occupancy rooms","Pods of 6 beds"],"answer":1,"explain":"Single-patient rooms are recommended over open-bay layouts to enhance infection control, patient and family satisfaction, privacy, and confidentiality."},
+{id:3,topic:"L1",q:"Decentralized staff charting areas in the ICU are recommended mainly to:","options":["Reduce construction cost","Allow staff to remain closer to patients with shorter response times","Eliminate the need for nurses","Replace the central nursing station entirely"],"answer":1,"explain":"Decentralized staff areas allow multiple charting locations, keeping staff closer to patients — resulting in shorter response times and improved patient visibility and safety."},
+{id:4,topic:"L1",q:"Natural lighting and window views in the ICU have been shown to:","options":["Increase patient mortality","Have no clinical effect","Reduce mortality, delirium, and ICU length of stay","Prolong mechanical ventilation"],"answer":2,"explain":"Window views and/or natural lighting reduce mortality, delirium, and ventilator/ICU length of stay (LOS)."},
+{id:5,topic:"L1",q:"Tele-ICU programs may:","options":["Increase mortality","Have no effect on outcomes","Reduce mortality and ICU length of stay","Replace bedside nurses entirely"],"answer":2,"explain":"Using tele-ICU capacity may reduce mortality and ICU length of stay."},
+{id:6,topic:"L1",q:"Which feature best supports infection prevention in ICU design?","options":["Standard HVAC only, regardless of resources","Antimicrobial surfaces, dedicated donning/doffing spaces, and advanced HVAC when feasible","Carpeted floors","Open windows year-round"],"answer":1,"explain":"Advanced infection prevention features include antimicrobial surfaces, specific handwashing sink designs, location of PPE, dedicated donning/doffing spaces, cleaning protocols, and advanced HVAC."},
+{id:7,topic:"L1",q:"Non-wall-based life support utility access (e.g., power columns, pendant-mounted booms) is recommended because:","options":["It is cheaper","Wall-based utilities often require the bed to be moved away from the wall to access the head of the patient","It looks more modern","It eliminates the need for monitors"],"answer":1,"explain":"Wall-based support utilities (power, medical gas) often require the bed to be moved away from the wall to access the patient's head; non-wall-based access (power columns, pendant booms) solves this."},
+{id:8,topic:"L1",q:"Which is NOT one of the eight patient characteristics in the Synergy Model?","options":["Resiliency","Vulnerability","Stability","Empathy"],"answer":3,"explain":"The eight patient characteristics are: Resiliency, Vulnerability, Stability, Complexity, Resource Availability, Participation in Care, Participation in Decision Making, and Predictability."},
+{id:9,topic:"L1",q:"In the Synergy Model, the term that refers to the ability to maintain a steady-state equilibrium is:","options":["Stability","Resiliency","Predictability","Complexity"],"answer":0,"explain":"Stability is defined as the ability to maintain a steady-state equilibrium."},
+{id:10,topic:"L1",q:"A patient's susceptibility to actual or potential stressors that may adversely affect outcomes is called:","options":["Vulnerability","Participation","Predictability","Complexity"],"answer":0,"explain":"Vulnerability is susceptibility to actual or potential stressors that may adversely affect patient outcomes."},
+{id:11,topic:"L1",q:"Which nurse competency involves clinical reasoning, critical thinking, and integrating formal/informal knowledge with evidence?","options":["Caring Practices","Clinical Judgment","Clinical Inquiry","Systems Thinking"],"answer":1,"explain":"Clinical Judgment is clinical reasoning, including clinical decision making, critical thinking, and a global grasp of the situation, integrating formal and informal experiential knowledge with evidence-based guidelines."},
+{id:12,topic:"L1",q:"Working on another's behalf and serving as a moral agent in resolving ethical concerns describes:","options":["Collaboration","Advocacy and Moral Agency","Facilitation of Learning","Response to Diversity"],"answer":1,"explain":"Advocacy and Moral Agency: working on another's behalf and representing concerns of patient/family and staff; serving as a moral agent in identifying and resolving ethical and clinical concerns."},
+{id:13,topic:"L1",q:"A core premise of the Synergy Model is that:","options":["Nurses' competencies drive patient characteristics","Patients' characteristics drive nurses' competencies, and when they synergize, outcomes are optimal","The model has only four patient characteristics","Patient outcomes are not influenced by nursing"],"answer":1,"explain":"Premises: patients' characteristics are of concern to nurses; nurses' competencies are important to patients; patients' characteristics drive nurses' competencies; when they match and synergize, outcomes are optimal."},
+{id:14,topic:"L1",q:"Which is NOT a positive ICU experience reported by patients?","options":["Feeling safe","Feeling secure","Sleep disturbance","Reassurance from staff"],"answer":2,"explain":"Negative experiences include fear, anxiety, sleep disturbance, cognitive impairment, and pain/discomfort. Positive experiences relate to feeling safe and secure."},
+{id:15,topic:"L1",q:"Stress, in the context of critical illness, exists when:","options":["The patient is asleep","An organism faces a stimulus causing disequilibrium between psychological and physiologic functioning","The patient has visitors","Pain medication is given"],"answer":1,"explain":"Stress exists when an organism faces any stimulus that causes disequilibrium between psychological and physiologic functioning."},
+{id:16,topic:"L1",q:"Anxiety is best described as:","options":["A neurological deficit","An emotional state of apprehension in response to a real or perceived threat","Always a sign of psychosis","A purely physical symptom"],"answer":1,"explain":"Anxiety is an emotional state of apprehension in response to a real or perceived threat, associated with motor tension, increased sympathetic activity, and hypervigilance."},
+{id:17,topic:"L1",q:"Which intervention promotes sleep in critically ill patients?","options":["Bathing patients in the middle of the night","Providing large clocks, blocking sleep times, ear plugs, and eye masks","Keeping all lights on continuously","Limiting family visits at all times"],"answer":1,"explain":"Sleep-promoting interventions include large clocks/calendars, blocking sleep times, quiet daytime periods, earplugs/eye masks, music therapy, white noise, eliminating pain, and titrating environmental stimuli."},
+{id:18,topic:"L1",q:"To foster trust with mechanically ventilated patients, nurses should:","options":["Avoid communication entirely","Use nonverbal signals, writing pads, or commercial communication boards","Speak only to family","Use loud speech"],"answer":1,"explain":"Communication with ventilated/intubated patients is difficult; use nonverbal signals, writing pads, or commercial communication boards."},
+{id:19,topic:"L1",q:"A sudden, unexpected, life-threatening occurrence that threatens the steady state of the family unit is best described as:","options":["Routine admission","Critical illness","Chronic stable disease","Outpatient procedure"],"answer":1,"explain":"A critical illness is a sudden, unexpected, and often life-threatening occurrence for both patient and family that threatens the steady state of internal equilibrium of the family unit."},
+{id:20,topic:"L1",q:"Which is an appropriate nursing intervention for the family in crisis?","options":["Give false reassurance","Avoid discussing the critical illness","Help the family identify its strengths and sources of support","Discourage family involvement in care"],"answer":2,"explain":"Appropriate interventions include helping the family identify strengths and sources of support, preparing them for the critical care environment, speaking openly, being realistic and honest, and conveying hope."},
+{id:21,topic:"L1",q:"Which is an example of a nursing diagnosis for the family with critical illness?","options":["Anticipatory grieving","Hypertension only","Hyperglycemia only","Fractured femur"],"answer":0,"explain":"Examples include anticipatory grieving, anxiety, caregiver role strain, communication readiness, coping (defensive, disabled family, ineffective), fear, hopelessness, powerlessness, spiritual distress, etc."},
+{id:22,topic:"L1",q:"Ergonomic designs in the ICU staff workspaces are recommended to:","options":["Increase injury risk","Reduce injury, increase efficiency, enhance staff satisfaction, and reduce fatigue","Replace all nursing staff","Eliminate the need for breaks"],"answer":1,"explain":"Ergonomic designs (adjustable desks, monitors, footrests, chairs) help reduce injury, increase efficiency, enhance staff satisfaction, and reduce fatigue."},
+{id:23,topic:"L1",q:"Surge capacity in the ICU should plan for surges in:","options":["Patient visits only","Equipment, staff, and ICU physical infrastructure (beds/care locations)","Visitor numbers only","Pharmacy stock only"],"answer":1,"explain":"Surge capacity includes equipment, staff, and the ICU physical infrastructure (beds/care locations)."},
+{id:24,topic:"L1",q:"The characteristic that allows one to expect a certain course of events or course of illness is:","options":["Predictability","Vulnerability","Complexity","Resiliency"],"answer":0,"explain":"Predictability is the characteristic that allows one to expect a certain course of events or course of illness."},
+{id:25,topic:"L1",q:"Caring Practices in the Synergy Model refer to:","options":["Nursing activities creating a compassionate, supportive, and therapeutic environment","Only administering medications on time","Strictly following physician orders","Documenting care only"],"answer":0,"explain":"Caring Practices: nursing activities that create a compassionate, supportive, and therapeutic environment, aiming to promote comfort/healing and prevent unnecessary suffering."},
+{id:26,topic:"L1",q:"Systems Thinking is best described as:","options":["Avoiding system-level considerations","The body of knowledge and tools that allow the nurse to manage environmental and system resources for the patient/family","Ignoring organizational policies","Operating only within the ICU room"],"answer":1,"explain":"Systems Thinking: body of knowledge and tools allowing the nurse to manage whatever environmental and system resources exist for the patient/family and staff, within or across systems."},
+{id:27,topic:"L1",q:"Critical care nurses are obligated, per AACN, to do all EXCEPT:","options":["Restore and maintain physiologic and psychosocial stability","Anticipate and respond to rapidly changing patient conditions","Recognize fiscal responsibility in a resource-intensive environment","Avoid involvement in end-of-life decisions"],"answer":3,"explain":"Nurses respond to the unique needs of patients/families coping with unanticipated treatment, quality-of-life, and end-of-life decisions — engagement is required, not avoidance."},
+
+/* ===== L2: Nutritional Alteration and Management ===== */
+{id:28,topic:"L2",q:"Approximately what percentage of critically ill patients are malnourished upon admission?","options":["10%","25%","Up to 55%","90%"],"answer":2,"explain":"Up to 55% of critically ill patients are malnourished upon admission, and risk increases due to hypercatabolic state and barriers to oral intake."},
+{id:29,topic:"L2",q:"The goal of nutritional support in critically ill patients is to:","options":["Increase energy deficit","Attenuate the detrimental effects of critical illness on nutritional state and improve outcomes","Replace all medications","Induce hyperglycemia"],"answer":1,"explain":"Nutritional support aims to attenuate detrimental effects on nutritional state (increased energy deficit and catabolism), while potentially improving outcomes and preventing/reversing malnutrition."},
+{id:30,topic:"L2",q:"In the fight-or-flight phase, the hypothalamus triggers the adrenal glands to release:","options":["Insulin and glucagon","Catecholamines (epinephrine & norepinephrine)","Cortisol and aldosterone","Thyroid hormones"],"answer":1,"explain":"Hypothalamus activation signals adrenal glands to release catecholamines (epinephrine & norepinephrine) in the fight-or-flight phase."},
+{id:31,topic:"L2",q:"During the fight-or-flight phase, glycogenolysis serves to:","options":["Store glucose in muscle","Release glucose to fuel essential organs (heart, brain, muscles)","Build new proteins","Lower blood pressure"],"answer":1,"explain":"Glycogenolysis releases glucose to fuel essential organs (heart, brain, muscles). Blood flow is redistributed to vital organs, reducing kidney perfusion."},
+{id:32,topic:"L2",q:"In the resistance phase, which hormone regulates metabolism and supports gluconeogenesis?","options":["Insulin","Cortisol from the adrenal cortex","Aldosterone","Melatonin"],"answer":1,"explain":"In the resistance phase, the adrenal cortex releases cortisol (regulates metabolism, supports gluconeogenesis); liver releases growth hormone; thyroid gland releases thyroid hormones."},
+{id:33,topic:"L2",q:"In the exhaustion phase, prolonged cortisol exposure causes:","options":["Enhanced immune function","Tissue breakdown (e.g., muscle wastage) and immune suppression","Increased muscle mass","Stable weight gain"],"answer":1,"explain":"Exhaustion phase: inability to manage stress leads to glucose depletion, continued cortisol causes tissue breakdown (muscle wastage), and immune suppression due to prolonged cortisol exposure."},
+{id:34,topic:"L2",q:"The 'Ebb Phase' (0–24 hours) of metabolic response:","options":["Is a hypermetabolic state","Focuses on providing oxygen & glucose to vital organs and restricts non-essential systems","Marks rapid weight gain","Is the same as the flow phase"],"answer":1,"explain":"Ebb Phase (0–24h): focuses on providing oxygen & glucose to vital organs, restricts non-essential systems to preserve energy."},
+{id:35,topic:"L2",q:"The 'Flow Phase' of metabolic response is characterized by:","options":["Hypometabolic state with energy surplus","Hypermetabolic state with breakdown of muscle & fat (catabolic state)","Stable weight and rapid wound healing","Suppressed oxygen demand"],"answer":1,"explain":"Flow Phase: hypermetabolic state increases oxygen and energy demand; breakdown of muscle & fat (catabolic state) results in rapid weight loss, delayed wound healing, and increased complications."},
+{id:36,topic:"L2",q:"Which screening tool is mentioned for malnutrition risk in hospitalized patients?","options":["MUST (Malnutrition Universal Screening Tool)","NRS-2002 only","MNA only","BMI alone"],"answer":0,"explain":"All hospitalized patients should be screened for malnutrition risk using tools like MUST. Critically ill patients require weekly screening."},
+{id:37,topic:"L2",q:"Indirect calorimetry (IC) measures:","options":["Body weight","Oxygen consumption and carbon dioxide production to assess energy needs","Blood pressure","Heart rate variability"],"answer":1,"explain":"IC measures oxygen consumption and CO2 production to assess energy needs. It's unreliable in critically ill patients due to metabolic disturbances, high O2 concentrations, and air leakage in ventilator circuits."},
+{id:38,topic:"L2",q:"The most commonly used method to estimate energy requirements in critical care is:","options":["Indirect calorimetry","Metabolic equations based on weight, gender, age, activity, and illness severity","BMI alone","Serum albumin"],"answer":1,"explain":"Metabolic equations based on weight, gender, age, activity level, and illness severity are the most commonly used method in critical care to estimate energy requirements."},
+{id:39,topic:"L2",q:"Non-nutritional energy sources such as glucose and lipids from Propofol should be:","options":["Ignored","Considered to avoid overfeeding","Doubled in calculation","Excluded from all calculations"],"answer":1,"explain":"Non-nutritional energy (e.g., glucose and lipids from Propofol) must be taken into account to avoid overfeeding."},
+{id:40,topic:"L2",q:"Enteral nutrition (EN) is preferred when:","options":["The GI tract is non-functional","The GI tract is functional","The patient is in hepatic coma","Parenteral access is easier"],"answer":1,"explain":"EN (feeding via GI tract using NG or PEG tubes) is preferred when the GI tract is functional. PN is used when enteral feeding is not possible."},
+{id:41,topic:"L2",q:"Early enteral nutrition (EEN) is defined as the provision of EN within:","options":["The first 1 hour","The initial 24–48 hours of critical illness presentation","The first 7 days","The first 14 days"],"answer":1,"explain":"EEN is the provision of enteral nutrition within the initial 24–48 hours of critical illness presentation."},
+{id:42,topic:"L2",q:"A major benefit of enteral nutrition is:","options":["Increased mortality","Preservation of gut mucosal integrity and reduced mortality","Bacterial translocation promotion","Elimination of all complications"],"answer":1,"explain":"EN reduces mortality and preserves gut mucosal integrity, prevents bacterial translocation, and supports the early catabolic phase."},
+{id:43,topic:"L2",q:"Which is NOT a sign of EN intolerance?","options":["Vomiting","Oesophageal regurgitation","Abdominal distension","Stable blood glucose"],"answer":3,"explain":"EN intolerance may cause vomiting, oesophageal regurgitation, abdominal distention, and diarrhea."},
+{id:44,topic:"L2",q:"To reduce aspiration risk in EN-fed patients, the head of the bed should be elevated:","options":["0° to 10°","10° to 20°","30° to 45°","75° to 90°"],"answer":2,"explain":"Elevate the bed 30° to 45°, use prokinetic drugs, and consider jejunal access if necessary to manage EN intolerance."},
+{id:45,topic:"L2",q:"Gastric Residual Volume (GRV) is checked by:","options":["Auscultating bowel sounds only","Aspirating contents from the gut to measure","Measuring urine output","Checking blood pressure"],"answer":1,"explain":"GRV is measured by aspirating contents from the gut to check absorption of feed. Auscultating bowel sounds indicates conditions like ileus, obstruction, or blockage."},
+{id:46,topic:"L2",q:"Parenteral nutrition (PN) is indicated when:","options":["EN is tolerated well","EN is not feasible or fails to meet caloric needs","The patient is eating normally","Glucose is stable"],"answer":1,"explain":"PN is used when EN is not feasible or fails to meet caloric needs. It can also be the sole source of nutrition in some cases."},
+{id:47,topic:"L2",q:"According to the lecture, PN may be started after how many days if the patient has not met 60% of energy target with EN?","options":["1–2 days","3–5 days","7–10 days","21 days"],"answer":2,"explain":"After 7–10 days if the patient has not met 60% of their energy target with EN, PN may be considered."},
+{id:48,topic:"L2",q:"PN withdrawal should be:","options":["Abrupt and immediate","Planned and stepwise with daily review","Done without monitoring","Postponed indefinitely"],"answer":1,"explain":"PN can be withdrawn when oral or enteral nutrition is tolerated. Withdrawal should be planned and stepwise with daily review; careful monitoring is required to avoid under/overfeeding."},
+{id:49,topic:"L2",q:"A critical nursing consideration for PN is:","options":["Skip aseptic technique","Maintain strict aseptic technique to prevent infections and regularly check blood glucose and electrolytes","Avoid blood glucose monitoring","Skip electrolyte checks"],"answer":1,"explain":"For PN: maintain strict aseptic technique to prevent infections, regularly check blood glucose levels and electrolyte balance."},
+{id:50,topic:"L2",q:"Before each feeding via NG tube, the nurse must:","options":["Skip placement verification","Ensure correct tube placement","Push the tube further in blindly","Crush all medications together"],"answer":1,"explain":"For EN: ensure correct tube placement before each feeding; monitor for aspiration risk, abdominal distension, and diarrhea."},
+{id:51,topic:"L2",q:"To prevent tube blockage, the nurse should flush the tube:","options":["Only after medication","Before and after aspiration, feeding, and medication administration","Once a day","Never"],"answer":1,"explain":"Prevent blockage by flushing the tube with clean water (sterile if immunocompromised) before and after aspiration, feeding, and medication administration."},
+{id:52,topic:"L2",q:"Confirming NG tube placement: pH of aspirate should be:","options":["< 5 to confirm gastric placement","> 7 to confirm gastric placement","= 10 always","> 14"],"answer":0,"explain":"pH graded paper (pH < 5 confirms gastric placement). X-ray confirmation if necessary (per National Patient Safety Agency)."},
+{id:53,topic:"L2",q:"Which statement about medication administration via NG tube is correct?","options":["Most drugs are licensed for nasogastric tube use","Drugs should not be added to feeds","All tablets can be crushed","Crushing is always safe"],"answer":1,"explain":"Most drugs are not licensed for NG use. Drugs should not be added to feeds. Some drugs (penicillin, phenytoin) require specific timing apart from feeds. Avoid crushing tablets unless indicated."},
+{id:54,topic:"L2",q:"Hyperglycemia in critical illness is caused by all EXCEPT:","options":["Fight-or-flight response","Gluconeogenesis from protein and fat in presence of cortisol","Insulin resistance","Improved insulin sensitivity"],"answer":3,"explain":"Insulin resistance occurs, leading to inhibited secretion and elevated blood glucose. Hyperglycemia is common in critical illness."},
+{id:55,topic:"L2",q:"The recommended target blood glucose range for critically ill patients is:","options":["40–80 mg/dL","80–110 mg/dL","140–180 mg/dL","200–250 mg/dL"],"answer":2,"explain":"Recommended target blood glucose range is 140–180 mg/dL. Insulin therapy is usually initiated as a continuous infusion once readings exceed 180 mg/dL (10 mmol/L)."},
+{id:56,topic:"L2",q:"Blood glucose monitoring is required at all these times EXCEPT:","options":["After insulin infusion adjustments","During nutritional therapy changes","At mealtimes for patients on oral diet","Only when patient feels unwell"],"answer":3,"explain":"Regular monitoring is required after insulin adjustments, during nutritional therapy changes, and at mealtimes for patients on oral diet."},
+{id:57,topic:"L2",q:"Refeeding syndrome is best described as:","options":["A mild electrolyte imbalance","A serious, potentially life-threatening condition that alters the electrolyte balance of cells when nutrition is reintroduced to starved/severely malnourished patients","A complication of overfeeding only","An allergic reaction to feed"],"answer":1,"explain":"Refeeding syndrome is a serious condition that alters the electrolyte balance of cells; it can be life-threatening when nutrition is reintroduced to starved or severely malnourished patients."},
+{id:58,topic:"L2",q:"In refeeding syndrome, supplements of which electrolytes may be required?","options":["Sodium, chloride, calcium","Potassium, phosphate, and magnesium","Iron, copper, zinc","Bicarbonate only"],"answer":1,"explain":"As nutrition is reintroduced, demand for electrolytes and micronutrients increases. Supplements of potassium, phosphate, and magnesium may be required."},
+{id:59,topic:"L2",q:"To reduce the risk of refeeding syndrome, feed should be started at:","options":["100% of target immediately","No more than 50% for the first 2 days of therapy","10% for the first 7 days","Skipped entirely"],"answer":1,"explain":"It recommends starting feed at no more than 50% for the first 2 days of therapy to help combat the risk of refeeding syndrome."},
+{id:60,topic:"L2",q:"Discontinuing nutritional support should involve:","options":["A solo nurse decision","A multidisciplinary team approach including a dietician and speech and language therapy","Immediate withdrawal only","Patient self-discharge"],"answer":1,"explain":"MDT approach including a dietician. Speech and Language Therapy team for patients who cannot swallow (e.g., post endotracheal or tracheostomy tube)."},
+{id:61,topic:"L2",q:"When transitioning to oral diet, feeding tubes should:","options":["Be removed immediately","Be left in place until sufficient calorie and protein intake is achieved","Be replaced weekly","Never be removed"],"answer":1,"explain":"It is useful to leave feeding tubes in place when starting an oral diet until sufficient calorie and protein intake is achieved."},
+{id:62,topic:"L2",q:"A key recommendation for nutritional management is to:","options":["Avoid breaks in delivery of nutritional support","Insert feeding tube blindly","Skip nutrition risk assessment","Delay EN until day 7"],"answer":0,"explain":"Avoid breaks in the delivery of nutritional support, since achieving calorific targets is challenging even in stable patients. Also: assess nutrition risk on admission, initiate EN within 24–48h, apply aspiration risk reduction, and check NG tube placement regularly."},
+
+/* ===== W3: Pain Management & Sedation, Agitation, Delirium ===== */
+{id:63,topic:"W3",q:"Pain is best defined as:","options":["Only a sensory experience","A distressing experience associated with actual or potential tissue damage with sensory, emotional, cognitive, and social/behavioral components","A purely physiologic reflex","Always a sign of tissue injury"],"answer":1,"explain":"Pain is a distressing experience associated with actual or potential tissue damage with sensory, emotional, cognitive, and social/behavioral components. It is subjective and multidimensional."},
+{id:64,topic:"W3",q:"Which is NOT one of the five components of pain?","options":["Sensory","Emotional","Cognitive","Respiratory"],"answer":3,"explain":"The components are: Sensory (intensity, location, quality), Emotional (unpleasantness, anxiety, fear), Cognitive (meaning/interpretation), Behavioral (expressing/avoiding/controlling pain), and Physiologic (nociception + stress response)."},
+{id:65,topic:"W3",q:"Which is a psychosocial factor contributing to pain in critically ill patients?","options":["Anxiety and depression","Continuous noise","Awakening every 1–2 hours","Sleep deprivation from environment"],"answer":0,"explain":"Psychosocial factors include anxiety and depression, impaired communication, fear of pain/disability/death, separation from family, boredom, sleep deprivation/delirium. ICU environment/routine factors include continuous noise, unnatural light patterns, awakenings, invasive procedures, competing priorities."},
+{id:66,topic:"W3",q:"The mnemonic PQRSTUV is used for:","options":["Sedation assessment","Pain self-report questioning","Delirium screening","Weaning assessment"],"answer":1,"explain":"PQRSTUV guides pain self-report: P=provocative/palliative, Q=quality, R=region/radiation, S=severity, T=timing, U=understanding, V=values/preferences."},
+{id:67,topic:"W3",q:"In the Critical-Care Pain Observation Tool (CPOT), a relaxed facial expression scores:","options":["2","1","0","3"],"answer":2,"explain":"Facial expression scoring: Relaxed/neutral = 0; Tense = 1; Grimacing = 2."},
+{id:68,topic:"W3",q:"In CPOT, 'fighting the ventilator' (asynchrony, frequent alarms) scores:","options":["0","1","2","3"],"answer":2,"explain":"Compliance with ventilator: Tolerating = 0; Coughing but tolerating = 1; Fighting ventilator (asynchrony, frequent alarms) = 2."},
+{id:69,topic:"W3",q:"The maximum total CPOT score is:","options":["4","6","8","10"],"answer":2,"explain":"CPOT total is /8 across four indicators (Facial, Body movements, Compliance/Vocalization, Muscle tension), each scored 0–2."},
+{id:70,topic:"W3",q:"Vital signs as primary indicators of pain are:","options":["Highly reliable","Not supported as primary indicators; they may be due to other distress, homeostatic changes, or medications","Always diagnostic of pain severity","Better than behavioral indicators"],"answer":1,"explain":"Vital signs should not be considered as primary indicators of pain because they can be attributed to other distress conditions, homeostatic changes, and medications. Changes should cue further assessment."},
+{id:71,topic:"W3",q:"Pain pharmacology is divided into which two categories?","options":["Opioid agonists and nonopioids","NSAIDs only","Local anesthetics only","Antidepressants only"],"answer":0,"explain":"Two categories: Opioid agonists (morphine, fentanyl, hydromorphone, meperidine, codeine, methadone) and nonopioids (acetaminophen, NSAIDs, ketamine, lidocaine, anticonvulsants, antidepressants)."},
+{id:72,topic:"W3",q:"Which is a nonpharmacologic intervention for pain?","options":["Massage, ice therapy, relaxation, music","Morphine infusion only","Fentanyl bolus only","Mechanical ventilation"],"answer":0,"explain":"Nonpharmacologic interventions: Physical (massage, ice therapy) and Cognitive-Behavioral (relaxation/breathing techniques, music)."},
+{id:73,topic:"W3",q:"The most life-threatening opioid side effect is:","options":["Constipation","Respiratory depression","Nausea","Itching"],"answer":1,"explain":"Respiratory depression is the most life-threatening opioid side effect. Signs: decreased RR (<8–10 breaths/min), decreased SpO2, elevated ETCO2, change in level of consciousness."},
+{id:74,topic:"W3",q:"Opioid-induced respiratory depression can be reversed with:","options":["Flumazenil","Naloxone","Protamine sulfate","Atropine"],"answer":1,"explain":"Respiratory depression can be readily reversed with administration of the opioid antagonist naloxone."},
+{id:75,topic:"W3",q:"Which is a warning sign of airway obstruction by the tongue (leading to hypoxemia and arrest)?","options":["Wheezing","Snoring","Coughing","Hiccuping"],"answer":1,"explain":"Snoring is a warning sign (airway obstruction by the tongue), leading to hypoxemia and cardiorespiratory arrest."},
+{id:76,topic:"W3",q:"Current guidelines recommend which sedation level for mechanically ventilated patients?","options":["Deep sedation","General anesthesia","Light sedation","No sedation at all"],"answer":2,"explain":"Current guidelines recommend light sedation for critically ill patients receiving mechanical ventilation."},
+{id:77,topic:"W3",q:"On the RASS, a score of -3 indicates:","options":["Alert and calm","Moderate sedation (movement/eye opening to voice but no eye contact)","Deep sedation","Combative"],"answer":1,"explain":"RASS -3 = Moderate sedation: movement or eye opening to voice (but no eye contact). RASS 0 = alert and calm; -4 = deep sedation; +4 = combative."},
+{id:78,topic:"W3",q:"On the RASS scale, +4 corresponds to:","options":["Alert and calm","Very agitated","Combative — overtly combative, violent, immediate danger to staff","Restless"],"answer":2,"explain":"+4 Combative: overtly combative, violent, immediate danger to staff."},
+{id:79,topic:"W3",q:"Light sedation (minimal sedation, anxiolysis) approximates which RASS score?","options":["RASS -1","RASS -3","RASS -4","RASS -5"],"answer":0,"explain":"Light sedation (anxiolysis, patient alert and can respond to verbal commands) approximates RASS -1."},
+{id:80,topic:"W3",q:"Which statement about sedation agents is correct?","options":["Propofol is a benzodiazepine","Dexmedetomidine is a central alpha-adrenergic receptor agonist","Midazolam is an opioid","Diazepam is an anticonvulsant only"],"answer":1,"explain":"Benzodiazepines: diazepam, lorazepam, midazolam. Sedative-hypnotics: propofol. Central alpha-2 adrenergic agonists: dexmedetomidine."},
+{id:81,topic:"W3",q:"Daily sedation interruption (sedation vacation, SAT) involves:","options":["Permanently stopping sedation","Turning off sedative infusions once each day with careful monitoring","Doubling sedation doses","Switching to neuromuscular blockade"],"answer":1,"explain":"To avoid sedative dependence and withdrawal: turn off sedative infusions once each day (sedation vacation and SAT). Monitor carefully; restart at a lower dose when awareness is attained."},
+{id:82,topic:"W3",q:"Agitation is best defined as:","options":["A type of delirium","Hyperactive patient movements ranging from restlessness to pulling lines/tubes or self-harm","A normal sleep response","A neurologic deficit"],"answer":1,"explain":"Agitation describes hyperactive patient movements from slight restlessness to pulling out lines/tubes or physical aggression and self-harm."},
+{id:83,topic:"W3",q:"Which is NOT a cause of agitation?","options":["Pain, anxiety, delirium","Hypoxia, ventilator dyssynchrony","Adequate analgesia","Full bladder, sleep deprivation, alcohol withdrawal"],"answer":2,"explain":"Causes include pain, anxiety, delirium, hypoxia, ventilator dyssynchrony, neurologic injury, uncomfortable position, full bladder, sleep deprivation, alcohol withdrawal, sepsis, medication reaction, and organ failure."},
+{id:84,topic:"W3",q:"For intubated, mechanically ventilated patients, sedation guidelines suggest:","options":["Analgesia-first sedation using nonbenzodiazepines (propofol or dexmedetomidine)","Benzodiazepines first line","Neuromuscular blockade first line","No sedation at all"],"answer":0,"explain":"Suggest using analgesia-first sedation; suggest using nonbenzodiazepines (propofol or dexmedetomidine) rather than benzodiazepines. A benzodiazepine may be given when dangerously agitated (SAS +7) or combative (RASS +4)."},
+{id:85,topic:"W3",q:"Delirium is best described as:","options":["A chronic cognitive disorder","Impairment of cognitive processes of sudden onset, with disorientation, impaired short-term memory, altered perceptions, and inappropriate behavior","A normal ICU response","A synonym for dementia"],"answer":1,"explain":"Delirium: impairment of cognitive processes, usually of sudden onset, coupled with disorientation, impaired short-term memory, altered sensory perceptions (hallucinations), abnormal thought processes, and inappropriate behavior."},
+{id:86,topic:"W3",q:"Approximately what percentage of mechanically ventilated patients experience delirium?","options":["Less than 10%","About 25%","Greater than 50%","Nearly 100%"],"answer":2,"explain":"Greater than 50% of mechanically ventilated patients experience delirium. Delirium increases hospital stay and mortality rates."},
+{id:87,topic:"W3",q:"The hyperactive form of delirium is often:","options":["Misdiagnosed as depression","Well recognized, labelled as 'agitated'","Always easy to treat","Untreatable"],"answer":1,"explain":"The hyperactive form is usually well recognized, labelled as being 'agitated'. Hypoactive is often not well recognized and misdiagnosed as depression."},
+{id:88,topic:"W3",q:"The hypoactive form of delirium is often:","options":["Easily recognized","Misdiagnosed as depression","Associated with agitation and shouting","Best treated with sedatives alone"],"answer":1,"explain":"The hypoactive form is often not well recognized and misdiagnosed as being depressed. Disorientation is common in delirium but not a feature of depression."},
+{id:89,topic:"W3",q:"Which is a predisposing factor for delirium?","options":["Advanced age, baseline cognitive impairment, frailty","Sepsis","Mechanical ventilation","Sleep disturbances"],"answer":0,"explain":"Predisposing factors: advanced age, baseline cognitive impairment, increased comorbid disease, frailty, alcohol/drug abuse, high severity of illness. Precipitating factors: metabolic disturbances, hypotension, sepsis, poor pain control, mechanical ventilation, sleep disturbances, benzodiazepines, opioids (meperidine, morphine), deep sedation, anticholinergics, steroids, surgery."},
+{id:90,topic:"W3",q:"Which medication class is strongly associated with precipitating delirium?","options":["Benzodiazepines","Beta-blockers","Insulin","Saline"],"answer":0,"explain":"Precipitating factors include benzodiazepines, opioids (meperidine, morphine), deep vs light sedation, anticholinergics, and steroids."},
+{id:91,topic:"W3",q:"Which tool is used to assess delirium in the ICU?","options":["RASS","CAM-ICU","CPOT","GCS"],"answer":1,"explain":"CAM-ICU (Confusion Assessment Method for the ICU) and ICDSC (Intensive Care Delirium Screening Checklist) are used for delirium assessment."},
+{id:92,topic:"W3",q:"Pharmacological delirium management is challenging because:","options":["Many medications prevent delirium","No medication has been identified that prevents delirium; management is primarily non-pharmacological","Antipsychotics cure delirium","Benzodiazepines prevent ICU delirium"],"answer":1,"explain":"No medication has been identified that prevents delirium. Management is intensive, multidisciplinary, and primarily employs non-pharmacological strategies."},
+{id:93,topic:"W3",q:"Which is an intervention to prevent delirium in mechanically ventilated patients?","options":["Deep sedation always","Light sedation, daily sedative interruption, spontaneous breathing trial, daily delirium monitoring, and early mobility","Physical restraints","Avoid mobility to prevent falls"],"answer":1,"explain":"Use light sedation, schedule daily sedative interruption, schedule a spontaneous breathing trial, daily delirium monitoring, and early mobility. Avoid physical restraints. Sleep protocols increase sleep opportunity."},
+{id:94,topic:"W3",q:"The ABCDEF bundle of the ICU Liberation Bundle includes all EXCEPT:","options":["Assess/prevent/manage pain","Both SAT and SBT","Choice of analgesia and sedation","Family engagement and empowerment","Fluid restriction (only)"],"answer":4,"explain":"ABCDEF: A=Assess, prevent, manage pain; B=Both SATs and SBTs; C=Choice of analgesia and sedation; D=Delirium assessment, prevention, management; E=Early mobility and exercise; F=Family engagement and empowerment."},
+{id:95,topic:"W3",q:"Post-intensive care syndrome (PICS) is:","options":["A cardiac complication","Depression and other cognitive changes after critical illness","A renal failure term","A type of delirium"],"answer":1,"explain":"Critical care patient diaries help answer questions about ICU stay. PICS — depression and other cognitive changes after a critical illness."},
+{id:96,topic:"W3",q:"The ethical principle of autonomy refers to:","options":["Avoiding harm","Right to self-determination; informed consent","Telling the truth","Allocating scarce resources"],"answer":1,"explain":"Autonomy: right to self-determination; informed consent respects autonomy by providing information needed to make ethically sound decisions."},
+{id:97,topic:"W3",q:"Nonmaleficence means:","options":["Promoting benefit","Avoiding unnecessary physical, psychological, or emotional harm","Keeping promises","Faithfulness"],"answer":1,"explain":"Nonmaleficence: avoid unnecessary physical/bodily harm and psychological/emotional distress; harm can be caused by breach of professional standards of care."},
+{id:98,topic:"W3",q:"Distributive justice refers to:","options":["Truth-telling","Allocation of scarce or finite resources","Avoiding harm","Faithfulness to promises"],"answer":1,"explain":"Justice is often discussed in terms of distributive justice, or how one allocates scarce or finite resources."},
+{id:99,topic:"W3",q:"Veracity is best described as:","options":["Telling the truth about diagnosis, including full disclosure of risks/benefits","Faithfulness to patients","Avoiding harm","Allocating resources"],"answer":0,"explain":"Veracity: telling the truth about diagnosis, including full disclosure of potential risks and benefits of specific treatments and alternatives, to enable informed decisions."},
+{id:100,topic:"W3",q:"Which is NOT an ethical issue commonly faced in critical care?","options":["End-of-life treatment decisions","Futility","Informed consent","Routine blood pressure measurement"],"answer":3,"explain":"Ethical issues include end-of-life treatment decisions, futility, truth-telling, organ harvesting/allocation, DNR, informed consent, clinical research, assisted suicide, aggressive measures, conflict among colleagues, and resource allocation."},
+{id:101,topic:"W3",q:"The first step in the ethical decision-making case method approach is:","options":["Goal setting and implementing","Assessing the problem","Defining the issues","Evaluating and modifying actions"],"answer":1,"explain":"Step 1: Assessing the Problem (identify ethical problem, understand medical condition/prognosis, gather sociodemographic info, check competency/advance directives). Step 2: Define Issues; Step 3: Goal setting/decision/implementation; Step 4: Evaluate/modify."},
+{id:102,topic:"W3",q:"Institutional ethics committees typically include all EXCEPT:","options":["Physicians and nurses","Social workers, counselors","Legal counsel, administrators, community members","Patient's family lawyer exclusively"],"answer":3,"explain":"Ethics committees are diverse: physicians, nurses, social workers, counselors, legal counsel, administrators, and community members. They provide ethics consultation and an external voice."},
+
+/* ===== W4: Acute Coronary Syndrome and Cardiac Surgery ===== */
+{id:103,topic:"W4",q:"Acute Coronary Syndrome (ACS) includes all EXCEPT:","options":["Unstable angina","STEMI","NSTEMI","Stable angina"],"answer":3,"explain":"ACS includes Unstable Angina, STEMI (ST-segment elevation MI), and NSTEMI (non-ST elevation MI). Stable angina is not part of ACS."},
+{id:104,topic:"W4",q:"In unstable angina:","options":["ST elevation is present on ECG","Biomarkers are detected in circulation","No ST changes on ECG and biomarkers are not detected","Biomarkers always present"],"answer":2,"explain":"Unstable angina: No ST changes on ECG; biomarkers are not detected in the circulation. STEMI has ST elevation + biomarkers. NSTEMI has biomarkers but no ST elevation."},
+{id:105,topic:"W4",q:"A key management goal for ACS patients in intensive/intermediate care is:","options":["Maximize cardiac workload","Minimize cardiac output","Maximize cardiac output and minimize cardiac workload","Avoid all monitoring"],"answer":2,"explain":"Management goals: maximizing cardiac output, minimizing cardiac workload, frequent vital signs, continuous cardiac monitoring with ST-segment monitoring, serial ECGs, and serial cardiac markers."},
+{id:106,topic:"W4",q:"For the first 12 hours of hospitalization, hemodynamically stable ACS patients without ischemic discomfort:","options":["Should ambulate freely","Should remain on bed rest","Should shower daily","Should be discharged"],"answer":1,"explain":"For first 12h: hemodynamically stable and free of ischemic-type chest discomfort remain on bed rest; activity increases gradually in stable patients."},
+{id:107,topic:"W4",q:"Oxygen therapy in ACS is appropriate for:","options":["All patients regardless of saturation","Patients who are hypoxemic (oxygen saturation less than 90%)","Only post-MI patients","Patients with normal SpO2"],"answer":1,"explain":"Oxygen is appropriate for patients who are hypoxemic (saturation < 90%). Monitor oxygen saturation continuously."},
+{id:108,topic:"W4",q:"Nitroglycerin in ACS:","options":["Is an appropriate substitute for analgesics","Is not an appropriate substitute for analgesics","Should be given IV only","Is contraindicated in all ACS"],"answer":1,"explain":"Attention to maximal pain relief; nitroglycerin is not an appropriate substitute for analgesics."},
+{id:109,topic:"W4",q:"Stool softeners are given post-MI to:","options":["Treat constipation only","Avoid Valsalva maneuver","Lower blood pressure","Reduce nausea"],"answer":1,"explain":"Stool softeners are administered so the patient avoids a Valsalva maneuver."},
+{id:110,topic:"W4",q:"In ACS pharmacologic therapy, clopidogrel is added to aspirin for STEMI patients and continued for:","options":["1 day","14 days","6 months","Lifelong"],"answer":1,"explain":"Clopidogrel is added to the aspirin regimen for patients with STEMI and is continued for 14 days."},
+{id:111,topic:"W4",q:"β Blockers and ACE inhibitors in ACS are:","options":["Initiated in first 24 hours unless contraindicated","Avoided entirely","Given only at discharge","Contraindicated in all ACS"],"answer":0,"explain":"β Blockers and ACE inhibitors are initiated in the first 24 hours unless contraindicated. β Blockers are continued during and after hospitalization."},
+{id:112,topic:"W4",q:"In the first several days after STEMI, it is important to:","options":["Maintain hyperglycemia","Normalize blood glucose levels (may require insulin infusion)","Stop all insulin","Withhold glucose"],"answer":1,"explain":"During the first several days after STEMI, it is important to normalize blood glucose levels; an insulin infusion may be required."},
+{id:113,topic:"W4",q:"CABG is performed to:","options":["Stent a coronary artery","Reroute or bypass blood flow past diseased areas of the coronary arteries using harvested vessels","Replace the heart","Repair heart valves"],"answer":1,"explain":"In CABG, native vessels or conduits are 'harvested' and used to reroute or bypass blood flow past diseased areas of the coronary arteries."},
+{id:114,topic:"W4",q:"Which is an indication for CABG?","options":["Left main CAD","Three-vessel disease with poor LV function","Significant stenosis in proximal LAD","All of the above"],"answer":3,"explain":"CABG is effective in relieving angina, improving exercise tolerance, and prolonging life in: left main CAD; three-vessel disease with poor LV function; two-vessel disease with significant stenosis in proximal LAD."},
+{id:115,topic:"W4",q:"Desired characteristics of a CABG graft/conduit include:","options":["Diameter similar to coronary arteries","No disease or vessel wall abnormalities","Adequate length","All of the above"],"answer":3,"explain":"Desired characteristics: diameter similar to coronary arteries, no disease/abnormalities, adequate length. Commonly used: saphenous vein grafts and internal mammary artery grafts."},
+{id:116,topic:"W4",q:"The saphenous vein from below the knee is preferred because of:","options":["Its length","Vessel size","Lower risk of infection","Cosmetic reasons"],"answer":1,"explain":"The Saphenous Vein from below the knee is preferred because of the vessel size."},
+{id:117,topic:"W4",q:"What percentage of saphenous vein grafts are occluded after 10 years?","options":["About 10%","About 25%","About 50%","About 90%"],"answer":2,"explain":"About 50% of saphenous vein grafts are occluded after 10 years. Three main processes: thrombosis (most common within 1st month/1 year), atherosclerosis, fibrointimal hyperplasia."},
+{id:118,topic:"W4",q:"The drug recommended postoperatively to prevent early saphenous vein graft closure is:","options":["Clopidogrel","Aspirin","Warfarin","Heparin"],"answer":1,"explain":"Aspirin is the drug recommended for use postoperatively to prevent early saphenous vein graft closure and should be continued indefinitely."},
+{id:119,topic:"W4",q:"Internal mammary artery grafts:","options":["Have 90% patency 10 years after surgery","Have less atherosclerosis over time","Are associated with lower long-term morbidity and improved survival","All of the above"],"answer":3,"explain":"90% of internal mammary artery grafts were patent 10 years after surgery; less atherosclerosis; lower long-term morbidity; improved long-term survival. LIMA or RIMA can be used."},
+{id:120,topic:"W4",q:"A potential complication when both LIMA and RIMA are used in diabetic or obese patients is:","options":["Renal failure","Sternal wound infection","Stroke","Pneumonia"],"answer":1,"explain":"Sternal wound infection may develop in DM or obese patient if LIMA and RIMA are both used."},
+{id:121,topic:"W4",q:"The most common surgical approach for MI revascularization and valve surgery is:","options":["Left thoracotomy","Median sternotomy","Mini-thoracotomy","Subxiphoid approach"],"answer":1,"explain":"The most common approach used for MI revascularization and valve surgery is the median sternotomy."},
+{id:122,topic:"W4",q:"The cardiopulmonary bypass machine is used because:","options":["The heart must be beating","The heart must be still (not beating) and empty during surgery","It replaces the kidneys","It cools the brain only"],"answer":1,"explain":"Because the heart must be still (not beating) and empty during surgery, a cardiopulmonary bypass machine is used. It assumes the job of oxygenating the patient's blood and circulating it throughout the body."},
+{id:123,topic:"W4",q:"During cardiopulmonary bypass, the patient's core body temperature is lowered to:","options":["10° to 15°C","28° to 32°C","37° to 40°C","0°C"],"answer":1,"explain":"Patient's core body temperature is lowered to 28° to 32°C to decrease metabolism. After surgery, the heat exchanger rewarms blood to return core temperature to 37°C."},
+{id:124,topic:"W4",q:"Heparinization during CPB is reversed by:","options":["Vitamin K","Protamine sulfate","Fresh frozen plasma","Platelets"],"answer":1,"explain":"Heparin is administered to prevent extravascular coagulation. Heparinization is reversed by protamine sulfate."},
+{id:125,topic:"W4",q:"After completion of cardiac surgery, what is anticipated if needed?","options":["Permanent cardiac pacing only","Temporary postoperative cardiac pacing","No pacing ever","Pacemaker implantation in OR"],"answer":1,"explain":"Temporary postoperative cardiac pacing is anticipated, if needed. Chest tubes are placed in mediastinum and pericardial space for drainage."},
+{id:126,topic:"W4",q:"On arrival to the ICU after cardiac surgery, the critical care team should do all EXCEPT:","options":["Attach to bedside cardiac monitor","Auscultate breath sounds bilaterally after ventilator connection","Apply ETCO2 device and pulse oximetry","Discontinue all IV lines immediately"],"answer":3,"explain":"Priority interventions on arrival: cardiac monitor, pressure lines, cardiac output/index, breath sound auscultation, ETCO2, pulse oximetry, peripheral pulse check, chest tube monitoring, body temperature measurement (rewarm if <36°C)."},
+{id:127,topic:"W4",q:"Hypothermia after cardiac surgery should be managed by:","options":["Aggressive cooling","Slow rewarming using radiant heat, blankets, or warming blanket; prevent shivering","Inducing shivering","No intervention"],"answer":1,"explain":"Assess temperature (PA or tympanic); rewarm slowly using radiant heat, blankets, or warming blanket. Prevent shivering (increases metabolic rate, O2 consumption, CO2 production, myocardial workload)."},
+{id:128,topic:"W4",q:"Shivering after cardiac surgery should be prevented because it:","options":["Improves circulation","Increases metabolic rate, oxygen consumption, CO2 production, and myocardial workload","Lowers body temperature further","Has no clinical effect"],"answer":1,"explain":"Shivering increases metabolic rate, oxygen consumption, CO2 production, and myocardial workload."},
+{id:129,topic:"W4",q:"Symptoms of Systemic Inflammatory Response Syndrome (SIRS) following CABG include:","options":["Bradycardia only","Fever, tachycardia, tachypnea, and increased WBC count","Hypotension only","Decreased WBC count only"],"answer":1,"explain":"SIRS following CABG includes Fever, tachycardia, tachypnea, and increase in WBC count. Steroids can decrease SIRS if given before surgery but use with caution in DM."},
+{id:130,topic:"W4",q:"The most severe postoperative pain after cardiac surgery typically lasts:","options":["1–2 days","3–4 days","1 week","2 weeks"],"answer":1,"explain":"Most people report that the pain is most severe the first 3 to 4 days after surgery."},
+{id:131,topic:"W4",q:"Which statement about NSAIDs in post-cardiac-surgery pain is correct?","options":["Always safe in all patients","Should be used with caution in patients with compromised renal function and thrombocytopenia","Contraindicated with morphine","First-line for all patients"],"answer":1,"explain":"NSAIDs should be used with caution in patients with compromised renal function and when platelet counts are decreased (thrombocytopenia). PCA pumps allow patient-controlled analgesia."},
+{id:132,topic:"W4",q:"Adequate potassium levels to minimize premature atrial contractions post-CABG are:","options":["2 to 2.5 mEq/L","3 to 3.5 mEq/L","4 to 4.5 mEq/L","5.5 to 6 mEq/L"],"answer":2,"explain":"Adequate potassium levels (4 to 4.5 mEq/L) and IV magnesium infusion may minimize premature atrial contractions, which are precursors to atrial fibrillation."},
+{id:133,topic:"W4",q:"For new-onset atrial fibrillation after cardiac surgery, the goals are:","options":["Conversion to sinus rhythm using antidysrhythmic drugs or control of ventricular response rate","Immediate cardioversion always","Withhold all medications","Discharge immediately"],"answer":0,"explain":"For new-onset AFib: goals are conversion to sinus rhythm using antidysrhythmic drugs or control of ventricular response rate. If AFib persists/reoccurs >24 hours, warfarin anticoagulation may be needed."},
+{id:134,topic:"W4",q:"After cardiac surgery, the initial ventilator mode is:","options":["CPAP","Assist-control ventilation","Pressure support only","No ventilation"],"answer":1,"explain":"Initial mode is assist-control ventilation. Starting point for SaO2 is 40-50% O2; PEEP starts at 5 cm H2O; tidal volumes set based on body size. Mode changes to CPAP when patient is awake, stable, ready to wean."},
+{id:135,topic:"W4",q:"The patient can be extubated when:","options":["Cardiac performance is good (CI > 2.2 L/min/m2)","Adequate oxygenation/ventilation without acidosis","Chest tube bleeding is minimal","All of the above"],"answer":3,"explain":"Extubation criteria: cardiac performance good (CI > 2.2 L/min/m2), adequate oxygenation/ventilation without acidosis, and chest tube bleeding minimal."},
+{id:136,topic:"W4",q:"If the post-cardiac-surgery patient is difficult to arouse with pinpoint pupils, reversal with which drug may be indicated?","options":["Protamine","Naloxone (Narcan)","Flumazenil","Atropine"],"answer":1,"explain":"If difficult to arouse with pinpoint pupils, reversal of narcotics with naloxone (Narcan) may be indicated. If poor muscle strength, reverse neuromuscular blockade with glycopyrrolate."},
+{id:137,topic:"W4",q:"Clopidogrel before cardiac surgery should be stopped:","options":["1 day before","3 days before","5 to 7 days before","On the day of surgery"],"answer":2,"explain":"Clopidogrel should be stopped 5 to 7 days before surgery."},
+{id:138,topic:"W4",q:"The usual chest tube output after cardiac surgery is:","options":["10–50 mL/h","100–200 mL/h","300–400 mL/h","500 mL/h"],"answer":1,"explain":"The usual chest tube output = 100 to 200 mL/h. If >200 mL/h, intervention is necessary (protamine given first to reverse heparin). Bleeding >500 mL/h is surgical bleeding and mandates re-exploration."},
+{id:139,topic:"W4",q:"Chest tube bleeding exceeding 500 mL/h after cardiac surgery is considered:","options":["Normal","Surgical bleeding and mandates surgical re-exploration","Medical bleeding only","Self-limiting"],"answer":1,"explain":"Chest tube bleeding that exceeds 500 mL/h is considered surgical bleeding and mandates surgical re-exploration. Protamine is given first to reverse heparin effects."},
+{id:140,topic:"W4",q:"Aggressive rewarming in a bleeding post-CABG patient is important because:","options":["It causes shivering, which stops bleeding","The coagulation cascade needs normal temperature; but as temperature rises, heparin is reactivated","Cooling promotes clotting","It has no effect on bleeding"],"answer":1,"explain":"Aggressive rewarming is important in a patient with increased bleeding because the coagulation cascade needs normal temperature. However, as temperature rises, heparin is reactivated, causing increased bleeding; platelet infusions are used to decrease bleeding."},
+{id:141,topic:"W4",q:"An elevated PT (>15 seconds) after cardiac surgery may indicate bleeding due to lack of:","options":["Platelets","Factors (e.g., fibrinogen) replaced using fresh frozen plasma","Heparin","Sodium"],"answer":1,"explain":"If bleeding increases, an elevated PT (>15 sec) may indicate bleeding due to a lack of factors (e.g., fibrinogen) that can be replaced using fresh frozen plasma."},
+{id:142,topic:"W4",q:"Oliguria (less than 0.5 mL/kg/h) after cardiac surgery is usually caused by:","options":["Acute renal failure","Decreased renal perfusion due to depressed cardiac function","Urinary tract infection","Medication allergy"],"answer":1,"explain":"Decreasing urine output (oliguria <0.5 mL/kg/h) is usually caused by decreased renal perfusion due to depressed cardiac function. Hypovolemia is common; treat with fluids. Some need diuresis (furosemide)."},
+{id:143,topic:"W4",q:"A preoperative teaching about the ICU experience for the cardiac surgery patient:","options":["Is optional and unnecessary","Reduces anxiety and physiological response to stress pre- and post-surgery","Increases patient anxiety","Should be done only by physicians"],"answer":1,"explain":"Psychological preparation: reduce anxiety and physiological response to stress pre and post surgery through effective preoperative teaching, ICU tour, and including family members in education."},
+
+/* ===== W5: Cardiac Dysrhythmia ===== */
+{id:144,topic:"W5",q:"The normal cardiac pacemaker (SA node) fires at a rate of:","options":["20–40 beats/min","40–60 beats/min","60–100 beats/min","100–150 beats/min"],"answer":2,"explain":"SA node: 60-100 beats/min (normal pacemaker). AV node/Junctional: 40-60 beats/min. Purkinje/Ventricular: 20-40 beats/min."},
+{id:145,topic:"W5",q:"The clinically most important heart rhythm is that of the:","options":["Atria","Ventricles","SA node","AV node"],"answer":1,"explain":"The clinically important rhythm is that of the ventricles because they supply the lungs and the rest of the body with blood. The ventricles systolic rate helps determine true perfusion."},
+{id:146,topic:"W5",q:"On ECG paper, one small square horizontally represents:","options":["0.04 second","0.20 second","1 second","0.5 second"],"answer":0,"explain":"ECG paper: horizontal axis is time. One small square = 0.04 sec; one large square (5 small) = 0.20 sec."},
+{id:147,topic:"W5",q:"A 6-second ECG strip contains how many large squares?","options":["10","20","30","40"],"answer":2,"explain":"6-second ECG strip = 30 large squares used for rate calculation."},
+{id:148,topic:"W5",q:"The P wave on ECG reflects:","options":["Ventricular depolarization","Atrial depolarization","Ventricular repolarization","Atrial repolarization"],"answer":1,"explain":"P wave: small, upright, rounded deflection reflecting atrial depolarization. Appears before QRS complex at consistent interval."},
+{id:149,topic:"W5",q:"The normal PR interval is:","options":["0.04 to 0.08 sec","0.12 to 0.20 sec","0.30 to 0.40 sec","0.50 to 0.60 sec"],"answer":1,"explain":"Normal PR interval is 0.12 (2.5 small squares) to 0.20 (5 small squares). It includes the delay of electrical signal at the AV node."},
+{id:150,topic:"W5",q:"The normal QRS complex interval is:","options":["0.06 to 0.11 sec","0.20 to 0.30 sec","0.04 to 0.06 sec","0.30 to 0.40 sec"],"answer":0,"explain":"Normal QRS complex interval is 0.06 (1.5 small squares) to 0.11 (2.5 small squares). It represents ventricular depolarization."},
+{id:151,topic:"W5",q:"Elevated ST segment on ECG indicates:","options":["Atrial hypertrophy","Myocardial injury or ischemia","Ventricular repolarization","Normal variant always"],"answer":1,"explain":"Elevated ST segment indicates myocardial injury or ischemia. The ST segment is from end of QRS to beginning of T wave."},
+{id:152,topic:"W5",q:"The T wave on ECG reflects:","options":["Atrial depolarization","Ventricular repolarization or recovery","AV node delay","Bundle of His activation"],"answer":1,"explain":"T wave reflects ventricular repolarization/recovery. Atrial repolarization is not visible on ECG because it occurs at the same time as QRS complex."},
+{id:153,topic:"W5",q:"Normal QTc interval for men is:","options":["0.30","0.42","0.50","0.60"],"answer":1,"explain":"QTc interval varies with heart rate; normal QTc for men is 0.42 and for women is 0.43. It's measured from beginning of QRS to end of T wave."},
+{id:154,topic:"W5",q:"A U wave on ECG is typically seen in:","options":["Hyperkalemia","Hypokalemia","Hypercalcemia","Hyponatremia"],"answer":1,"explain":"U wave: rarely seen; small positive deflection after T wave; typically seen in hypokalemia."},
+{id:155,topic:"W5",q:"Estimating heart rate by counting QRS complexes in a 6-second strip and multiplying by 10 provides:","options":["Atrial rate","Ventricular rate","SA node rate","Purkinje rate"],"answer":1,"explain":"In 6-second strip: Number of QRS × 10 = Ventricular rate; Number of P × 10 = Atrial rate. Both should be the same in normal rhythm. This method works for regular and irregular rhythms."},
+{id:156,topic:"W5",q:"When rhythm is regular, ventricular rate can be estimated by:","options":["300 / number of large boxes between two R waves","150 / number of small boxes","60 / number of P waves","100 / RR interval in mm"],"answer":0,"explain":"Ventricular rate = 300 / number of large boxes between two R waves. Atrial rate = 300 / number of large boxes between two P waves. Used only for regular rhythms."},
+{id:157,topic:"W5",q:"Electrical activity can occur without contraction; therefore, the most accurate method to determine heart rate is:","options":["ECG monitor","Palpating the pulse","Counting P waves","Auscultating bowel sounds"],"answer":1,"explain":"Estimating HR using ECG strip/cardiac monitor should never be substituted for determining HR by palpating the pulse. In some situations, electrical activity occurs without contraction (e.g., PEA)."},
+{id:158,topic:"W5",q:"In Normal Sinus Rhythm:","options":["Impulse initiates at SA node at 60–100 beats/min, P wave before QRS, PR 0.12–0.20, narrow QRS","Impulse is from the ventricles","PR is greater than 0.30","QRS is wide"],"answer":0,"explain":"NSR: impulse initiates at SA node at 60-100 beats/min; P wave before QRS; PR 0.12 to 0.20 sec; QRS narrow (<0.12 sec)."},
+{id:159,topic:"W5",q:"Sinus tachycardia is defined as a rate of:","options":["Less than 60 beats/min","60–100 beats/min","100 or more, extending to 160–180 beats/min","Greater than 200 beats/min"],"answer":2,"explain":"Sinus tachycardia rate starts at 100 or more and extends to 160-180 beats/min. Causes: stress, exercise, stimulants, fever, anemia, hyperthyroidism, hypoxemia, heart failure, shock, atropine, epinephrine, dopamine."},
+{id:160,topic:"W5",q:"Sinus tachycardia treatment is usually directed at:","options":["Immediate electrical cardioversion","Eliminating the underlying cause","Giving beta-blockers first","Implanting a pacemaker"],"answer":1,"explain":"Treatment of sinus tachycardia is usually directed at eliminating the underlying cause. The rapid rate increases myocardial O2 demands and decreases ventricular filling time."},
+{id:161,topic:"W5",q:"Sinus bradycardia is a rhythm with impulses originating at the sinus node at a rate:","options":["Greater than 100","60–100","Less than 60 beats/min","Less than 40"],"answer":2,"explain":"Sinus bradycardia: rate less than 60 beats/min. May be associated with sleep, severe pain, inferior wall MI, acute spinal cord injury, and drugs (digitalis, β-blockers, calcium channel blockers)."},
+{id:162,topic:"W5",q:"For a symptomatic patient with very slow pulse in sinus bradycardia, appropriate measures include:","options":["Atropine or cardiac pacing","Adenosine","Amiodarone","Defibrillation"],"answer":0,"explain":"If pulse is very slow and patient is symptomatic, appropriate measures include atropine (to block vagal effect) or cardiac pacing. No treatment is indicated unless symptoms are present."},
+{id:163,topic:"W5",q:"Sinus dysrhythmia on ECG shows RR intervals that vary by:","options":["Less than 0.04 sec","More than 0.12 second (from shortest to longest)","Exactly 0.20 sec","More than 0.50 sec"],"answer":1,"explain":"On ECG, from shortest RR interval to longest, vary by more than 0.12 second. Caused by irregularity in sinus node discharge, often with respiratory cycle (increases with inspiration, decreases with expiration)."},
+{id:164,topic:"W5",q:"Paroxysmal Supraventricular Tachycardia (PSVT) is also known as:","options":["AV nodal reentrant tachycardia","Atrial fibrillation","Ventricular tachycardia","Sinus bradycardia"],"answer":0,"explain":"PSVT is also known as AV nodal reentrant tachycardia; mechanism is a reentrant circuit or chaotic movement at the level of the AV node. Rate 150-250 beats/min."},
+{id:165,topic:"W5",q:"PSVT is characterized by:","options":["Gradual onset and termination","Sudden onset and termination","Chronic stable rhythm","Wide QRS always"],"answer":1,"explain":"The tachycardia begins abruptly (often with a Premature Atrial Contraction) and ends abruptly (sudden onset and termination). Rhythm is regular; QRS usually normal."},
+{id:166,topic:"W5",q:"A common intervention to terminate PSVT is:","options":["Vagal stimulation (carotid massage or Valsalva maneuver)","Immediate defibrillation","Administration of amiodarone","Implanting a pacemaker"],"answer":0,"explain":"Vagal stimulation often terminates PSVT (carotid massage or Valsalva maneuver). Cardioversion or overdrive pacing may be required if drug therapy is unsuccessful."},
+{id:167,topic:"W5",q:"Atrial flutter is best described as:","options":["Atrial rate 60–100 beats/min","Atrial rate 250–350 beats/min with sawtooth P waves","Atrial rate >500 with chaotic waves","Ventricular rate >200"],"answer":1,"explain":"Atrial flutter is a rapid atrial ectopic rhythm: atria fire at 250-350 beats/min. AV node allows every 2nd/3rd/4th stimulus (2:1, 3:1, 4:1 block). Produces 'sawtooth' P waves on ECG."},
+{id:168,topic:"W5",q:"If atrial flutter persists for more than 72 hours, what may be needed before pharmacological or electrical conversion?","options":["Anticoagulation","Beta-blockers only","Cardioversion immediately","Diuretics"],"answer":0,"explain":"If atrial flutter has been present for more than 72 hours, anticoagulation may be needed before pharmacological or electrical conversion is attempted. Other long-term therapies: ablation, pacing, ICD."},
+{id:169,topic:"W5",q:"Atrial fibrillation is characterized by:","options":["Atrial rates 350–500 beats/min with chaotic, quivering fibrillatory waves","Regular sawtooth P waves","Atrial rate of 60-100","Wide QRS always"],"answer":0,"explain":"Atrial fibrillation: rapid atrial ectopic rhythm at 350-500 beats/min; chaotic atrial activity with small, quivering fibrillatory waves. Ventricular rhythm is characteristically irregular."},
+{id:170,topic:"W5",q:"The immediate clinical concern in atrial fibrillation is:","options":["The rate of ventricular response and formation of emboli","Atrial rate","PR interval","P wave morphology only"],"answer":0,"explain":"Immediate clinical concern is the rate of ventricular response and the formation of emboli. Too fast a ventricular rate decreases end-diastolic filling time and cardiac output. Mural thrombi can cause stroke, MI, pulmonary embolus."},
+{id:171,topic:"W5",q:"A premature ventricular contraction (PVC) is:","options":["An ectopic beat originating prematurely at the atria","An ectopic beat originating prematurely at the ventricles","A normal sinus beat","A synonym for atrial fibrillation"],"answer":1,"explain":"PVC is an ectopic beat originating prematurely at the level of the ventricles. No atrial electrical activity = no P waves. QRS is wide with T wave opposite in direction to QRS."},
+{id:172,topic:"W5",q:"Ventricular bigeminy is defined as:","options":["A PVC after each sinus beat","A PVC after two consecutive sinus beats","Two PVCs in a row","Three PVCs in a row"],"answer":0,"explain":"Ventricular bigeminy: a PVC that occurs after each sinus beat. Ventricular trigeminy: a PVC occurs after two consecutive sinus beats."},
+{id:173,topic:"W5",q:"Two PVCs in a row are called a:","options":["Triplet","Couplet","Bigeminy","Uniform PVC"],"answer":1,"explain":"Two PVCs in a row = couplet. Three in a row = triplet, constituting a short run of ventricular tachycardia."},
+{id:174,topic:"W5",q:"'Uniform' PVCs are:","options":["PVCs originating from multiple sites with varying shapes","PVCs originating from one ventricular site with the same configuration","PVCs with a normal QRS","PVCs that occur in bigeminy"],"answer":1,"explain":"Uniform PVCs originate from one ventricular site (same configuration). Multiformed PVCs originate from more than one ventricular site (two or more shapes)."},
+{id:175,topic:"W5",q:"In the emergency setting, drugs of choice for managing multiple/consecutive PVCs are:","options":["Amiodarone and lidocaine","Adenosine and atropine","Digoxin and furosemide","Aspirin and heparin"],"answer":0,"explain":"Multiple or consecutive PVCs may be managed with antidysrhythmic agents. In the emergency setting, amiodarone and lidocaine are the drugs of choice. Treat underlying cause (hypokalemia, digoxin toxicity)."},
+{id:176,topic:"W5",q:"Ventricular tachycardia is defined as:","options":["Three or more PVCs in a row at rate >100 beats/min","Two PVCs","Atrial rate >250","A single PVC"],"answer":0,"explain":"VT is defined as three or more PVCs in a row; wide, bizarre QRS complexes in fairly regular rhythm at rate >100 beats/min. P waves, if seen, are not related to QRS. Common complication of MI."},
+{id:177,topic:"W5",q:"If a patient with VT is hemodynamically stable, the drug of choice is:","options":["Amiodarone IV","Adenosine","Atropine","Digoxin"],"answer":0,"explain":"If hemodynamically stable, amiodarone (antiarrhythmic) may be administered IV. If unstable, synchronized cardioversion (or unsynchronized defibrillation in emergencies). Long-term: ICD."},
+{id:178,topic:"W5",q:"Ventricular fibrillation on ECG shows:","options":["Regular sawtooth waves","Only irregular oscillations (fluctuations) of baseline — coarse or fine","Wide QRS complexes at rate >100","Normal P waves with no QRS"],"answer":1,"explain":"VF is rapid, irregular, and ineffectual depolarizations of the ventricle. On ECG, only irregular oscillations (fluctuations) of the baseline are apparent, either coarse or fine. Loss of consciousness within seconds; no pulse, no cardiac output."},
+{id:179,topic:"W5",q:"Ventricular fibrillation is fatal if:","options":["It self-terminates","Rapid defibrillation is not instituted immediately","Patient is given amiodarone","Patient is at rest"],"answer":1,"explain":"VF is fatal if rapid defibrillation is not instituted immediately. If no response to defibrillation, support with CPR and drugs is required."},
+{id:180,topic:"W5",q:"Causes of ventricular fibrillation include all EXCEPT:","options":["Myocardial ischemia and infarction","Electrocution","Catheter manipulation in the ventricles","Sinus bradycardia"],"answer":3,"explain":"Causes of VF include myocardial ischemia/infarction, catheter manipulation in ventricles, electrocution, terminal rhythms in circulatory failure, and conditions that prolong refractory period (QT interval)."},
+{id:181,topic:"W5",q:"For chronic tachydysrhythmias, the implantable device used is:","options":["Pacemaker","Internal cardioverter-defibrillator (ICD)","CPB machine","Ventricular assist device"],"answer":1,"explain":"Implantable devices: pacemakers for bradycardias and internal cardioverter-defibrillators (ICDs) for chronic tachydysrhythmias. Elective cardioversion and defibrillation are for acute tachydysrhythmias."},
+{id:182,topic:"W5",q:"A slower ventricular rhythm compromises perfusion because:","options":["The shorter diastole reduces filling time","The longer diastole increases filling","It always increases cardiac output","It has no effect on CO"],"answer":0,"explain":"A very rapid ventricular rhythm compromises perfusion needs because the shorter the diastole, the less time for filling of the chambers. Decreased ventricular filling reduces cardiac output (CO)."},
+{id:183,topic:"W5",q:"In VT, if the patient becomes unstable, the appropriate intervention is:","options":["Synchronized cardioversion or unsynchronized defibrillation","Continue observation","Give atropine","Administer adenosine"],"answer":0,"explain":"If the patient becomes unstable with VT, synchronized cardioversion (or in emergency situations, unsynchronized defibrillation) is indicated."},
+{id:184,topic:"W5",q:"For atrial flutter treatment, the goals are to:","options":["Re-establish sinus rhythm or achieve ventricular rate control","Always perform immediate defibrillation","Use digoxin exclusively","Avoid anticoagulation"],"answer":0,"explain":"Treatment goals: re-establish sinus rhythm or, when ventricular rate is rapid, achieve ventricular rate control. Drugs to slow conduction through AV node or pharmacological conversion. Electrical cardioversion if drugs fail."},
+{id:185,topic:"W5",q:"Cardiac ablation is a long-term therapy option for:","options":["Sinus bradycardia","Atrial flutter and certain tachydysrhythmias","Ventricular fibrillation","Asystole"],"answer":1,"explain":"Other long-term management therapies for atrial flutter: ablation, pacing, and use of an implantable cardioverter-defibrillator (ICD)."},
+{id:186,topic:"W5",q:"Which rhythm is characterized by chaotic atrial activity with small, quivering waves and an irregular ventricular rhythm?","options":["Atrial flutter","Atrial fibrillation","Sinus dysrhythmia","Ventricular tachycardia"],"answer":1,"explain":"Atrial fibrillation: chaotic atrial activity with small, quivering fibrillatory waves; ventricular rhythm is characteristically irregular. Atrial rate 350-500 beats/min."},
+{id:187,topic:"W5",q:"A PVC shows which ECG features?","options":["P wave before each QRS","Wide QRS complex with T wave opposite in direction to QRS","Narrow QRS with regular rate","Sawtooth P waves"],"answer":1,"explain":"PVC: no P waves (no atrial activity); wide QRS complex with T wave opposite in direction to the QRS complex; often followed by a compensatory pause."},
+{id:188,topic:"W5",q:"PSVT may be caused in adults with normal hearts by:","options":["Emotions, tobacco, alcohol, caffeine","Coronary artery disease only","Aortic stenosis","Heart block"],"answer":0,"explain":"In adults with normal hearts, PSVT causes include emotions, tobacco, alcohol, caffeine. Symptoms: palpitations and lightheadedness. With heart disease: rheumatic heart disease, acute MI, digitalis toxicity; symptoms include dyspnea, angina, heart failure."}
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const State = {
+  config:{
+    numQ:20,
+    topic:'all',
+    displayMode:'single',
+    bgTheme:'ocean',
+    bgAnim:'bubbles',
+    bgDensity:14,
+    clickFx:'emojis',
+    centerFx:'auto',
+    celebSize:'medium',
+    celebSpeed:'normal',
+    celebIntensity:3,
+    fontFamily:"system-ui",
+    shuffleQ:true,
+    shuffleA:true,
+    showExplain:true,
+    immediate:true,
+    examMode:false,
+    smooth:true,
+    collapseNav:true,
+    collapseAnswered:false,
+    showMiniStatus:true,
+  },
+  pool:[],            // working pool after filtering
+  session:[],         // questions in current exam (with shuffled options)
+  index:0,            // for single mode
+  answered:{},        // {qid: {selected, correct, locked}}
+  results:null,
+  retestFailedOnly:false,
+  studyFilter:'all',
+};
+
+const TOPIC_META = {
+  L1:{label:'L1 · ICU Structure & Scope',color:'#4a90e2'},
+  L2:{label:'L2 · Nutrition',color:'#2ecc71'},
+  W3:{label:'W3 · Pain/Sedation/Delirium',color:'#9b59b6'},
+  W4:{label:'W4 · ACS & Cardiac Surgery',color:'#e67e22'},
+  W5:{label:'W5 · Cardiac Dysrhythmia',color:'#e74c3c'},
+};
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function shuffle(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function $(id){return document.getElementById(id)}
+function setText(id,t){const e=$(id);if(e)e.textContent=t}
+
+/* ============================================================
+   BG ANIMATIONS (multi-type)
+   ============================================================ */
+function initBgBubbles(){
+  const c=$('bgBubbles');
+  c.innerHTML='';
+  c.className='bg-bubbles';
+  if(State.config.bgAnim==='none') return;
+  c.classList.add(State.config.bgAnim);
+  const N = State.config.bgDensity || 14;
+  if(N===0) return;
+  const anim = State.config.bgAnim;
+  for(let i=0;i<N;i++){
+    const s=document.createElement('span');
+    if(anim==='bubbles'){
+      const size=20+Math.random()*80;
+      s.style.left=Math.random()*100+'%';
+      s.style.width=size+'px';
+      s.style.height=size+'px';
+      s.style.animationDuration=(8+Math.random()*16)+'s';
+      s.style.animationDelay=(-Math.random()*16)+'s';
+    } else if(anim==='snow'){
+      const size=4+Math.random()*8;
+      s.style.left=Math.random()*100+'%';
+      s.style.width=size+'px';
+      s.style.height=size+'px';
+      s.style.animationDuration=(6+Math.random()*10)+'s';
+      s.style.animationDelay=(-Math.random()*10)+'s';
+    } else if(anim==='stars'){
+      const size=2+Math.random()*4;
+      s.style.left=Math.random()*100+'%';
+      s.style.top=Math.random()*100+'%';
+      s.style.width=size+'px';
+      s.style.height=size+'px';
+      s.style.animationDuration=(2+Math.random()*4)+'s';
+      s.style.animationDelay=(-Math.random()*4)+'s';
+      s.style.animationName='starTwinkle';
+    } else if(anim==='hearts'){
+      s.textContent=['❤','💖','💗','💕','💓'][Math.floor(Math.random()*5)];
+      s.style.left=Math.random()*100+'%';
+      s.style.animationDuration=(8+Math.random()*14)+'s';
+      s.style.animationDelay=(-Math.random()*14)+'s';
+    } else if(anim==='shapes'){
+      s.style.left=Math.random()*100+'%';
+      s.style.width=(15+Math.random()*25)+'px';
+      s.style.height=s.style.width;
+      s.style.animationDuration=(10+Math.random()*14)+'s';
+      s.style.animationDelay=(-Math.random()*14)+'s';
+    } else if(anim==='leaves'){
+      s.textContent=['🍃','🌿','🍂','🍁'][Math.floor(Math.random()*4)];
+      s.style.left=Math.random()*100+'%';
+      s.style.animationDuration=(10+Math.random()*12)+'s';
+      s.style.animationDelay=(-Math.random()*12)+'s';
+    } else if(anim==='matrix'){
+      s.textContent=Math.random()<0.5?'0':'1';
+      s.style.left=Math.random()*100+'%';
+      s.style.animationDuration=(4+Math.random()*8)+'s';
+      s.style.animationDelay=(-Math.random()*8)+'s';
+      s.style.animationName='bubbleUp';
+    }
+    c.appendChild(s);
+  }
+  // Inject dynamic keyframes for starTwinkle if not present
+  if(anim==='stars' && !document.getElementById('starTwinkleKf')){
+    const sty=document.createElement('style');
+    sty.id='starTwinkleKf';
+    sty.textContent=`@keyframes starTwinkle{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1.4)}}`;
+    document.head.appendChild(sty);
+  }
+}
+
+/* ============================================================
+   FONT ADJUSTMENT
+   ============================================================ */
+let currentFontSize=16;
+function adjustFont(delta){
+  if(delta===0) currentFontSize=16;
+  else currentFontSize=Math.max(11,Math.min(26,currentFontSize+delta));
+  document.documentElement.style.setProperty('--font-base',currentFontSize+'px');
+  setText('fontInd',currentFontSize+'px');
+}
+
+/* ============================================================
+   SETUP UI BINDINGS
+   ============================================================ */
+function bindSetup(){
+  // Number sync between input + range
+  const num=$('numQ'),rng=$('numQRange'),val=$('numQVal');
+  function syncNum(v){
+    v=Math.max(5,Math.min(200,parseInt(v)||5));
+    num.value=v; rng.value=v; val.textContent=v;
+    State.config.numQ=v;
+  }
+  num.addEventListener('input',()=>syncNum(num.value));
+  rng.addEventListener('input',()=>syncNum(rng.value));
+
+  $('topicFilter').addEventListener('change',e=>State.config.topic=e.target.value);
+  $('displayMode').addEventListener('change',e=>State.config.displayMode=e.target.value);
+  $('bgTheme').addEventListener('change',e=>{
+    State.config.bgTheme=e.target.value;
+    document.body.setAttribute('data-theme',e.target.value);
+  });
+  $('bgAnim').addEventListener('change',e=>{
+    State.config.bgAnim=e.target.value;
+    initBgBubbles();
+  });
+  $('clickFx').addEventListener('change',e=>State.config.clickFx=e.target.value);
+  $('centerFxSel').addEventListener('change',e=>State.config.centerFx=e.target.value);
+  $('celebSize').addEventListener('change',e=>State.config.celebSize=e.target.value);
+  $('celebSpeed').addEventListener('change',e=>State.config.celebSpeed=e.target.value);
+  $('celebIntensity').addEventListener('input',e=>{
+    State.config.celebIntensity=parseInt(e.target.value);
+    $('celebIntensityVal').textContent=e.target.value;
+  });
+  $('bgDensity').addEventListener('input',e=>{
+    State.config.bgDensity=parseInt(e.target.value);
+    $('bgDensityVal').textContent=e.target.value;
+    initBgBubbles();
+  });
+  $('fontFamily').addEventListener('change',e=>{
+    State.config.fontFamily=e.target.value;
+    document.documentElement.style.setProperty('--font-family',e.target.value);
+  });
+
+  // Toggles
+  const toggles=[
+    ['tShuffleQ','shuffleQ'],
+    ['tShuffleA','shuffleA'],
+    ['tShowExplain','showExplain'],
+    ['tImmediate','immediate'],
+    ['tExamMode','examMode'],
+    ['tSmooth','smooth'],
+    ['tCollapseNav','collapseNav'],
+    ['tCollapseAnswered','collapseAnswered'],
+    ['tShowMiniStatus','showMiniStatus'],
+  ];
+  toggles.forEach(([id,key])=>{
+    const el=$(id);
+    const cb=el.querySelector('input');
+    cb.checked=State.config[key];
+    if(State.config[key]) el.classList.add('active'); else el.classList.remove('active');
+    el.addEventListener('click',e=>{
+      if(e.target.tagName==='INPUT') return;
+      cb.checked=!cb.checked;
+      State.config[key]=cb.checked;
+      el.classList.toggle('active',cb.checked);
+      // examMode disables immediate
+      if(key==='examMode' && cb.checked){
+        const tImm=$('tImmediate');
+        const immCb=tImm.querySelector('input');
+        immCb.checked=false;
+        State.config.immediate=false;
+        tImm.classList.remove('active');
+      }
+    });
+  });
+
+  initBgBubbles();
+  document.body.setAttribute('data-theme',State.config.bgTheme);
+  document.documentElement.style.setProperty('--font-family',State.config.fontFamily);
+}
+
+/* ============================================================
+   START EXAM
+   ============================================================ */
+function startExam(){
+  // Build pool based on topic filter
+  let pool = State.config.topic==='all'
+    ? QUESTIONS.slice()
+    : QUESTIONS.filter(q=>q.topic===State.config.topic);
+
+  if(pool.length===0){ alert('No questions available for this filter.'); return; }
+
+  // Shuffle pool if needed, then slice to numQ
+  let working = State.config.shuffleQ ? shuffle(pool) : pool.slice();
+  const need = Math.min(State.config.numQ, working.length);
+  let chosen = working.slice(0, need);
+
+  // For each chosen question, possibly shuffle options
+  State.session = chosen.map(q=>{
+    const opts = q.options.map((text,i)=>({text,origIndex:i}));
+    const shuffled = State.config.shuffleA ? shuffle(opts) : opts.slice();
+    return {
+      id:q.id, topic:q.topic, q:q.q, explain:q.explain,
+      options:shuffled,            // [{text,origIndex}]
+      correctOrigIndex:q.answer,
+    };
+  });
+
+  // If retestFailedOnly mode: filter to failed question ids
+  if(State.retestFailedOnly && State.results){
+    const failedIds = State.results.filter(r=>!r.correct).map(r=>r.id);
+    // Re-pull those questions from full bank with same shuffled structure
+    State.session = QUESTIONS.filter(q=>failedIds.includes(q.id)).map(q=>{
+      const opts = q.options.map((text,i)=>({text,origIndex:i}));
+      const shuffled = State.config.shuffleA ? shuffle(opts) : opts.slice();
+      return {id:q.id,topic:q.topic,q:q.q,explain:q.explain,options:shuffled,correctOrigIndex:q.answer};
+    });
+    State.retestFailedOnly=false; // reset
+  }
+
+  State.answered={};
+  State.index=0;
+  State.results=null;
+
+  $('setupPanel').style.display='none';
+  $('studyArea').style.display='none';
+  $('results').style.display='none';
+  $('testArea').style.display='block';
+
+  renderProgress();
+  renderQuestions();
+  if(State.config.displayMode==='single'){
+    $('nextBtn').style.display='inline-block';
+    $('prevBtn').style.display='inline-block';
+  } else {
+    $('nextBtn').style.display='none';
+    $('prevBtn').style.display='none';
+  }
+  if(State.config.smooth) window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ============================================================
+   RENDER QUESTIONS
+   ============================================================ */
+function renderQuestions(){
+  const c=$('questionContainer');
+  c.innerHTML='';
+  const mode=State.config.displayMode;
+  if(mode==='single'){
+    renderSingle(c,State.index);
+  } else {
+    State.session.forEach((q,idx)=>renderQuestionCard(c,idx));
+  }
+}
+function renderSingle(c,idx){
+  renderQuestionCard(c,idx,true);
+}
+function renderQuestionCard(c,idx,single){
+  const q=State.session[idx];
+  if(!q) return;
+  const card=document.createElement('div');
+  card.className='qcard';
+  card.dataset.idx=idx;
+  card.dataset.qid=q.id;
+
+  // Header row: topic + number on left, collapse toggle on right
+  const header=document.createElement('div');
+  header.className='card-header';
+  const meta=document.createElement('div');
+  meta.className='qmeta';
+  const topicM=TOPIC_META[q.topic];
+  meta.innerHTML=`<span style="color:${topicM.color}">● ${topicM.label}</span><span>Q ${idx+1} / ${State.session.length}</span>`;
+  // Mini status placeholder (visible when collapsed)
+  const mini=document.createElement('span');
+  mini.className='mini-status pending';
+  mini.id='mini-'+idx;
+  mini.textContent='⏳ Pending';
+  meta.appendChild(mini);
+  header.appendChild(meta);
+
+  // Collapse toggle (visible only in list mode, or when collapsible nav is enabled)
+  if(State.config.displayMode==='list' || State.config.collapseNav){
+    const tg=document.createElement('button');
+    tg.className='card-toggle';
+    tg.title='Collapse / expand this MCQ';
+    tg.innerHTML='<span class="chev">▼</span>';
+    tg.addEventListener('click',e=>{
+      e.stopPropagation();
+      card.classList.toggle('collapsed');
+      updateMiniStatus(idx,card);
+    });
+    header.appendChild(tg);
+  }
+  card.appendChild(header);
+
+  const txt=document.createElement('div');
+  txt.className='qtext';
+  txt.innerHTML=`<span class="num">${idx+1}</span>${q.q}`;
+  card.appendChild(txt);
+
+  const opts=document.createElement('div');
+  opts.className='options';
+  q.options.forEach((opt,i)=>{
+    const o=document.createElement('div');
+    o.className='opt';
+    o.dataset.optIndex=i;
+    const key=String.fromCharCode(65+i);
+    o.innerHTML=`<span class="key">${key}</span><span>${opt.text}</span>`;
+    o.addEventListener('click',()=>handleAnswer(idx,i,o,opts,card));
+    opts.appendChild(o);
+  });
+  card.appendChild(opts);
+
+  const explain=document.createElement('div');
+  explain.className='explain';
+  explain.id='explain-'+idx;
+  card.appendChild(explain);
+
+  c.appendChild(card);
+
+  // Auto-collapse if already answered and config says so
+  if(State.config.displayMode==='list' && State.config.collapseAnswered && State.answered[q.id]){
+    card.classList.add('collapsed');
+  }
+  updateMiniStatus(idx,card);
+
+  if(single && State.config.smooth){
+    setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'start'}),50);
+  }
+}
+
+/* Update mini status badge based on answered state */
+function updateMiniStatus(idx,card){
+  const q=State.session[idx];
+  if(!q) return;
+  const mini=card.querySelector('.mini-status');
+  if(!mini) return;
+  const ans=State.answered[q.id];
+  if(card.classList.contains('collapsed')){
+    mini.style.display = State.config.showMiniStatus ? '' : 'none';
+    if(!ans){
+      mini.className='mini-status pending';
+      mini.textContent='⏳ Pending';
+    } else if(ans.correct){
+      mini.className='mini-status ok';
+      mini.textContent='✓ Correct';
+    } else {
+      mini.className='mini-status bad';
+      mini.textContent='✗ Wrong';
+    }
+  } else {
+    mini.style.display='none';
+  }
+}
+
+/* ============ COLLAPSE / NAV CONTROL FUNCTIONS ============ */
+function toggleNavCollapse(){
+  const wrap=$('qnavWrap');
+  const ctrl=$('navControls');
+  if(!wrap) return;
+  wrap.classList.toggle('collapsed');
+  ctrl.classList.toggle('collapsed-control',wrap.classList.contains('collapsed'));
+}
+function collapseAllCards(){
+  document.querySelectorAll('.qcard').forEach(card=>{
+    if(!card.querySelector('.card-toggle')) return; // no toggle (single mode)
+    card.classList.add('collapsed');
+    updateMiniStatus(parseInt(card.dataset.idx),card);
+  });
+}
+function expandAllCards(){
+  document.querySelectorAll('.qcard').forEach(card=>{
+    card.classList.remove('collapsed');
+    updateMiniStatus(parseInt(card.dataset.idx),card);
+  });
+}
+function collapseAnsweredCards(){
+  document.querySelectorAll('.qcard').forEach(card=>{
+    const idx=parseInt(card.dataset.idx);
+    const q=State.session[idx];
+    if(q && State.answered[q.id]){
+      card.classList.add('collapsed');
+      updateMiniStatus(idx,card);
+    }
+  });
+}
+function jumpToUnanswered(){
+  // find first unanswered question
+  const idx=State.session.findIndex(q=>!State.answered[q.id]);
+  if(idx<0){
+    // all answered; go to first wrong if any
+    const wrongIdx=State.session.findIndex(q=>State.answered[q.id] && !State.answered[q.id].correct);
+    if(wrongIdx>=0){ scrollToCard(wrongIdx); return; }
+    alert('🎉 All questions answered correctly!');
+    return;
+  }
+  scrollToCard(idx);
+}
+function scrollToCard(idx){
+  if(State.config.displayMode==='single'){
+    State.index=idx;
+    renderQuestions();
+    renderProgress();
+    return;
+  }
+  const card=document.querySelector(`.qcard[data-idx="${idx}"]`);
+  if(card){
+    card.classList.remove('collapsed');
+    updateMiniStatus(idx,card);
+    if(State.config.smooth) card.scrollIntoView({behavior:'smooth',block:'center'});
+    else card.scrollIntoView({block:'center'});
+  }
+}
+
+/* ============================================================
+   HANDLE ANSWER
+   ============================================================ */
+function handleAnswer(idx,optIndex,optEl,optsContainer,card){
+  const q=State.session[idx];
+  if(State.answered[q.id] && State.answered[q.id].locked) return; // already answered
+
+  const chosen=q.options[optIndex];
+  const isCorrect = chosen.origIndex===q.correctOrigIndex;
+  const isExam = State.config.examMode;
+
+  // In exam mode: store answer without showing feedback
+  if(isExam){
+    State.answered[q.id]={selected:optIndex,correct:isCorrect,locked:false};
+    // Just mark visually as selected
+    [...optsContainer.children].forEach(o=>o.classList.remove('selected'));
+    optEl.classList.add('selected');
+    optEl.style.background='#eef2ff';
+    optEl.style.borderColor='var(--primary)';
+    return;
+  }
+
+  // Immediate mode
+  State.answered[q.id]={selected:optIndex,correct:isCorrect,locked:true};
+
+  // Lock all options
+  [...optsContainer.children].forEach(o=>{
+    o.classList.add('disabled');
+    o.classList.remove('selected');
+  });
+
+  // Color correct & wrong
+  if(State.config.immediate){
+    [...optsContainer.children].forEach((o,i)=>{
+      const opt=q.options[i];
+      if(opt.origIndex===q.correctOrigIndex) o.classList.add('correct');
+      if(i===optIndex && !isCorrect) o.classList.add('wrong');
+    });
+  }
+
+  // Show explanation
+  if(State.config.showExplain){
+    const ex=card.querySelector('.explain');
+    ex.innerHTML=`<b>${isCorrect?'✓ Correct.':'✗ Not quite.'}</b> ${q.explain}`;
+    ex.classList.add('show');
+  }
+
+  // Update progress + nav
+  renderProgress();
+
+  // Update mini status on the card (if collapsed)
+  updateMiniStatus(idx,card);
+
+  // Auto-collapse answered cards (list mode) if configured
+  if(State.config.displayMode==='list' && State.config.collapseAnswered){
+    setTimeout(()=>{
+      card.classList.add('collapsed');
+      updateMiniStatus(idx,card);
+    },900); // delay so user sees the feedback first
+  }
+
+  // Center celebration + click fx
+  triggerCenterCelebration(isCorrect);
+  triggerClickFx(optEl,isCorrect,q.topic);
+
+  // Auto-advance single mode if correct? Allow user to click Next.
+}
+
+/* ============================================================
+   PROGRESS + NAV
+   ============================================================ */
+function renderProgress(){
+  const total=State.session.length;
+  let answeredCount=0,correctCount=0,wrongCount=0;
+  State.session.forEach(q=>{
+    if(State.answered[q.id]){
+      answeredCount++;
+      if(State.answered[q.id].correct) correctCount++;
+      else wrongCount++;
+    }
+  });
+  const pct = total? Math.round((answeredCount/total)*100):0;
+  setText('progLabel',`Question ${Math.min(State.index+1,total)} / ${total}`);
+  setText('progPct',`${pct}%  ·  Answered ${answeredCount}/${total}`);
+  $('progFill').style.width=pct+'%';
+  setText('chipCorrect',`✓ ${correctCount}`);
+  setText('chipWrong',`✗ ${wrongCount}`);
+  setText('chipRemaining',`⏳ ${total-answeredCount} remaining`);
+
+  // Nav grid
+  const nav=$('qnav');
+  nav.innerHTML='';
+  State.session.forEach((q,i)=>{
+    const b=document.createElement('button');
+    b.textContent=i+1;
+    if(State.answered[q.id]){
+      if(State.config.immediate && !State.config.examMode){
+        b.classList.add(State.answered[q.id].correct?'done-ok':'done-bad');
+      } else {
+        b.classList.add('done-ok'); // answered (exam mode doesn't reveal)
+      }
+    }
+    if(i===State.index && State.config.displayMode==='single') b.classList.add('cur');
+    b.addEventListener('click',()=>{
+      if(State.config.displayMode!=='single'){
+        b.scrollIntoView({behavior:State.config.smooth?'smooth':'auto',block:'start'});
+        return;
+      }
+      State.index=i;
+      renderQuestions();
+      renderProgress();
+    });
+    nav.appendChild(b);
+  });
+}
+
+function nextQuestion(){
+  if(State.index<State.session.length-1){
+    State.index++;
+    renderQuestions();
+    renderProgress();
+  } else {
+    finishExam(false);
+  }
+}
+function prevQuestion(){
+  if(State.index>0){
+    State.index--;
+    renderQuestions();
+    renderProgress();
+  }
+}
+function abortExam(){
+  if(!confirm('Abort the current exam? Progress will be lost.')) return;
+  goSetup();
+}
+function finishExam(forced){
+  // Tally
+  let correct=0,wrong=0;
+  const detailed=[];
+  State.session.forEach(q=>{
+    const ans=State.answered[q.id];
+    const correctBool = ans? ans.correct : false;
+    if(ans && ans.correct) correct++;
+    else wrong++;
+    detailed.push({id:q.id,topic:q.topic,q:q.q,
+      selectedText: ans? q.options[ans.selected].text : '(no answer)',
+      correctText: q.options.find(o=>o.origIndex===q.correctOrigIndex).text,
+      correct:correctBool,
+      explain:q.explain
+    });
+  });
+  State.results=detailed;
+  const total=State.session.length;
+  const pct = total? Math.round((correct/total)*100):0;
+  showResults(correct,wrong,total,pct);
+}
+
+/* ============================================================
+   RESULTS
+   ============================================================ */
+function showResults(correct,wrong,total,pct){
+  $('testArea').style.display='none';
+  $('results').style.display='block';
+  setText('scorePct',pct+'%');
+  setText('scoreDetail',`${correct} / ${total} correct  ·  ${wrong} wrong`);
+  let grade='—';
+  if(pct>=90) grade='🏆 Excellent — Distinction';
+  else if(pct>=80) grade='🌟 Very Good';
+  else if(pct>=70) grade='👍 Good — Pass';
+  else if(pct>=60) grade='🙂 Fair — Review needed';
+  else grade='🔁 Needs improvement — Retest recommended';
+  setText('gradeLabel',grade);
+
+  // Stats by topic
+  const byTopic={};
+  State.results.forEach(r=>{
+    byTopic[r.topic] = byTopic[r.topic] || {total:0,correct:0};
+    byTopic[r.topic].total++;
+    if(r.correct) byTopic[r.topic].correct++;
+  });
+  const stats=$('resultStats');
+  stats.innerHTML='';
+  Object.entries(byTopic).forEach(([t,s])=>{
+    const m=TOPIC_META[t];
+    const div=document.createElement('div');
+    div.className='stat';
+    div.innerHTML=`<div class="v" style="color:${m.color}">${s.correct}/${s.total}</div><div class="l">${m.label}</div>`;
+    stats.appendChild(div);
+  });
+
+  // Big celebration if passed
+  if(pct>=70) bigConfetti();
+  else triggerCenterCelebration(false,true);
+
+  // Review list (hidden by default)
+  $('reviewList').innerHTML='';
+  if(State.config.smooth) window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function reviewWrong(){
+  const list=$('reviewList');
+  if(list.innerHTML){
+    list.innerHTML='';
+    return;
+  }
+  const wrong=State.results.filter(r=>!r.correct);
+  if(wrong.length===0){
+    list.innerHTML='<p class="muted">🎉 No wrong answers — perfect score!</p>';
+    return;
+  }
+  wrong.forEach(r=>{
+    const card=document.createElement('div');
+    card.className='study-card';
+    const m=TOPIC_META[r.topic];
+    card.innerHTML=`
+      <div class="stitle" style="color:${m.color}">${m.label}</div>
+      <div class="sq">${r.q}</div>
+      <div class="sa" style="border-left-color:#ff5e62;background:#fff5f5">
+        <b style="color:#c0353a">Your answer:</b> ${r.selectedText}
+      </div>
+      <div class="sa">
+        <b>Correct answer:</b> ${r.correctText}
+      </div>
+      <div class="sa" style="background:#f8fbff;border-left-color:var(--accent)">
+        <b style="color:var(--primary)">Explanation:</b> ${r.explain}
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function retestFailed(){
+  const failedCount = State.results.filter(r=>!r.correct).length;
+  if(failedCount===0){ alert('🎉 No failed answers to retest — you aced it!'); return; }
+  State.retestFailedOnly=true;
+  $('results').style.display='none';
+  $('setupPanel').style.display='none';
+  // Start with retestFailedOnly flag set — startExam will pick failed questions
+  startExam();
+}
+
+function restartSameConfig(){
+  $('results').style.display='none';
+  startExam();
+}
+function goSetup(){
+  $('results').style.display='none';
+  $('testArea').style.display='none';
+  $('studyArea').style.display='none';
+  $('setupPanel').style.display='block';
+  if(State.config.smooth) window.scrollTo({top:0,behavior:'smooth'});
+}
+function resetAll(){
+  if(!confirm('Reset all settings and progress?')) return;
+  State.config.numQ=20; State.config.topic='all'; State.config.displayMode='single';
+  State.config.bgTheme='ocean'; State.config.bgAnim='bubbles'; State.config.bgDensity=14;
+  State.config.clickFx='emojis'; State.config.centerFx='auto';
+  State.config.celebSize='medium'; State.config.celebSpeed='normal'; State.config.celebIntensity=3;
+  State.config.fontFamily='system-ui';
+  State.config.shuffleQ=true; State.config.shuffleA=true; State.config.showExplain=true;
+  State.config.immediate=true; State.config.examMode=false; State.config.smooth=true;
+  State.config.collapseNav=true; State.config.collapseAnswered=false; State.config.showMiniStatus=true;
+  State.session=[]; State.answered={}; State.results=null; State.index=0;
+  location.reload();
+}
+
+/* ============================================================
+   CENTER CELEBRATION (scale-up + fade)
+   ============================================================ */
+function triggerCenterCelebration(isCorrect,isResultScreen){
+  const sel=State.config.centerFx;
+  if(sel==='off') return;
+  const overlay=$('centerFx');
+  overlay.innerHTML='';
+  const wrap=document.createElement('div');
+  wrap.className='celebrate';
+  // Apply size & speed modifiers
+  const sizeClass = {small:'s-small',medium:'s-medium',large:'s-large'}[State.config.celebSize]||'s-medium';
+  const speedClass = {fast:'fast',normal:'',slow:'slow'}[State.config.celebSpeed]||'';
+  wrap.classList.add(sizeClass);
+  if(speedClass) wrap.classList.add(speedClass);
+  // Override animation duration if needed
+  const dur = {fast:800,normal:1200,slow:1800}[State.config.celebSpeed]||1200;
+  wrap.style.animationDuration=dur+'ms';
+
+  let emoji, color, label;
+  if(sel==='auto'){
+    emoji = isCorrect? '✨' : '💥';
+    color = isCorrect? '#2ecc71' : '#ff5e62';
+    label = isCorrect? 'CORRECT!' : 'TRY AGAIN';
+  } else if(sel==='stars'){
+    emoji='⭐'; color='#f9d423'; label=isCorrect?'CORRECT!':'OOPS';
+  } else if(sel==='fireworks'){
+    emoji='🎆'; color='#9b59b6'; label=isCorrect?'CORRECT!':'OOPS';
+    spawnFireworkBurst();
+  } else if(sel==='emojis'){
+    emoji = isCorrect? '🎉' : '😅';
+    color = isCorrect? '#2ecc71' : '#ff5e62';
+    label = isCorrect? 'CORRECT!' : 'TRY AGAIN';
+    spawnEmojiBurst(isCorrect);
+  } else if(sel==='confetti'){
+    emoji='🎊'; color='#2ecc71'; label=isCorrect?'CORRECT!':'TRY AGAIN';
+    spawnConfettiBurst(isCorrect);
+  } else if(sel==='trophy'){
+    if(!isCorrect){
+      // Fallback for wrong answers when trophy mode selected
+      emoji='💡'; color='#f9d423'; label='TRY AGAIN';
+    } else {
+      emoji='🏆'; color='#f9d423'; label='CORRECT!';
+    }
+    // Screen flash for correct
+    if(isCorrect) screenFlash('#f9d423');
+  } else if(sel==='minimal'){
+    emoji = isCorrect? '✓' : '✗';
+    color = isCorrect? '#2ecc71' : '#ff5e62';
+    label = isCorrect? 'CORRECT' : 'WRONG';
+  } else { return; }
+
+  wrap.style.color=color;
+  // Glow (intensity >=3)
+  if(State.config.celebIntensity>=3){
+    const glow=document.createElement('div');
+    glow.className='glow';
+    wrap.appendChild(glow);
+  }
+  // Ring (always on at intensity >=1)
+  const ring=document.createElement('div');
+  ring.className='ring';
+  // Intensity scaling: bigger ring at higher intensity
+  const ringScale = 1 + (State.config.celebIntensity-1)*0.25;
+  ring.style.setProperty('--ringScale',ringScale);
+  wrap.appendChild(ring);
+  // Second dashed ring at intensity >=4
+  if(State.config.celebIntensity>=4){
+    const ring2=document.createElement('div');
+    ring2.className='ring2';
+    wrap.appendChild(ring2);
+  }
+  const ic=document.createElement('div');
+  ic.textContent=emoji;
+  ic.style.lineHeight='1';
+  wrap.appendChild(ic);
+  const lbl=document.createElement('div');
+  lbl.className='label';
+  lbl.textContent=label;
+  lbl.style.color=color;
+  wrap.appendChild(lbl);
+  overlay.appendChild(wrap);
+
+  // Spawn extra fireworks for correct at intensity >=4
+  if(isCorrect && sel==='auto' && State.config.celebIntensity>=4){
+    spawnFireworkBurst();
+  }
+  // Extra firework bursts at intensity 5
+  if(State.config.celebIntensity===5 && isCorrect){
+    setTimeout(()=>spawnFireworkBurst(),250);
+    setTimeout(()=>spawnFireworkBurst(),500);
+  }
+
+  setTimeout(()=>{ wrap.remove(); }, dur+150);
+}
+
+/* Screen flash effect */
+function screenFlash(color){
+  const f=document.createElement('div');
+  f.style.cssText=`position:fixed;inset:0;background:${color};opacity:.35;pointer-events:none;z-index:59;`;
+  document.body.appendChild(f);
+  f.animate([
+    {opacity:.35},{opacity:0}
+  ],{duration:600,easing:'ease-out'});
+  setTimeout(()=>f.remove(),650);
+}
+
+/* ============================================================
+   CLICK FX (particle on the clicked option)
+   ============================================================ */
+function triggerClickFx(targetEl,isCorrect,topic){
+  const fx=State.config.clickFx;
+  if(fx==='none') return;
+  const rect=targetEl.getBoundingClientRect();
+  const cx=rect.left+rect.width/2;
+  const cy=rect.top+rect.height/2;
+
+  if(fx==='emojis'){
+    const emojis = isCorrect? ['✅','🎉','🌟','💯','👏','💚'] : ['❌','😅','💡','📚','💪','🤔'];
+    for(let i=0;i<8;i++){
+      const p=document.createElement('div');
+      p.className='fx-particle';
+      p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      p.style.left=(cx-10+(Math.random()*60-30))+'px';
+      p.style.top=cy+'px';
+      p.style.fontSize=(1+Math.random()*0.8)+'rem';
+      p.style.animationDelay=(i*0.05)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),1200);
+    }
+  } else if(fx==='stars'){
+    for(let i=0;i<10;i++){
+      const p=document.createElement('div');
+      p.className='fx-particle';
+      p.textContent='⭐';
+      p.style.left=(cx-10+(Math.random()*80-40))+'px';
+      p.style.top=cy+'px';
+      p.style.color=isCorrect?'#f9d423':'#ff5e62';
+      p.style.fontSize=(1+Math.random()*0.8)+'rem';
+      p.style.animationDelay=(i*0.04)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),1200);
+    }
+  } else if(fx==='bubbles'){
+    for(let i=0;i<12;i++){
+      const p=document.createElement('div');
+      p.className='fx-particle';
+      p.textContent='●';
+      const c = isCorrect? ['#2ecc71','#7bed9f','#a8e063'] : ['#ff5e62','#ff9a9e','#fab1a0'];
+      p.style.color=c[Math.floor(Math.random()*c.length)];
+      p.style.left=(cx-10+(Math.random()*70-35))+'px';
+      p.style.top=cy+'px';
+      p.style.fontSize=(0.8+Math.random()*1.2)+'rem';
+      p.style.animationDelay=(i*0.03)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),1200);
+    }
+  } else if(fx==='fireworks'){
+    spawnFireworkAt(cx,cy,isCorrect);
+  } else if(fx==='hearts'){
+    for(let i=0;i<10;i++){
+      const p=document.createElement('div');
+      p.className='fx-particle';
+      p.textContent = isCorrect? '❤️' : '💜';
+      p.style.left=(cx-10+(Math.random()*70-35))+'px';
+      p.style.top=cy+'px';
+      p.style.fontSize=(1+Math.random()*0.8)+'rem';
+      p.style.animationDelay=(i*0.04)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),1200);
+    }
+  } else if(fx==='confetti'){
+    spawnConfettiAt(cx,cy,isCorrect);
+  } else if(fx==='mixed'){
+    // Pick a random effect for this click
+    const opts=['emojis','stars','bubbles','fireworks','hearts','confetti'];
+    const pick=opts[Math.floor(Math.random()*opts.length)];
+    const fakeConfig={...State.config,clickFx:pick};
+    const origFx=State.config.clickFx;
+    State.config.clickFx=pick;
+    triggerClickFx(targetEl,isCorrect,topic);
+    State.config.clickFx=origFx;
+  }
+}
+
+/* Confetti burst at point */
+function spawnConfettiAt(x,y,isCorrect){
+  const colors = isCorrect? ['#2ecc71','#f9d423','#4facfe','#00f2fe','#ff6b9d','#9b59b6'] : ['#ff5e62','#ff9a9e','#feca57','#ee5253'];
+  const n=18;
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=x+'px';
+    c.style.top=y+'px';
+    c.style.width=(6+Math.random()*6)+'px';
+    c.style.height=(10+Math.random()*8)+'px';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    document.body.appendChild(c);
+    const angle=Math.random()*Math.PI*2;
+    const dist=60+Math.random()*120;
+    const dx=Math.cos(angle)*dist;
+    const dy=Math.sin(angle)*dist - 30; // bias upward
+    const rot=Math.random()*720;
+    c.animate([
+      {transform:'translate(0,0) rotate(0)',opacity:1},
+      {transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`,opacity:0}
+    ],{duration:900+Math.random()*400,easing:'cubic-bezier(.2,.8,.4,1)'});
+    setTimeout(()=>c.remove(),1400);
+  }
+}
+
+/* Big confetti burst from top of screen (for celebration variant) */
+function spawnConfettiBurst(isCorrect){
+  const colors = isCorrect? ['#2ecc71','#f9d423','#4facfe','#00f2fe','#ff6b9d','#9b59b6','#7bed9f'] : ['#ff5e62','#ff9a9e','#feca57','#ee5253'];
+  const cx=window.innerWidth/2;
+  const cy=window.innerHeight/2-100;
+  for(let i=0;i<30;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=(cx+(Math.random()*200-100))+'px';
+    c.style.top=cy+'px';
+    c.style.width=(6+Math.random()*6)+'px';
+    c.style.height=(10+Math.random()*8)+'px';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    document.body.appendChild(c);
+    const angle=Math.random()*Math.PI*2;
+    const dist=120+Math.random()*200;
+    const dx=Math.cos(angle)*dist;
+    const dy=Math.sin(angle)*dist;
+    const rot=Math.random()*720;
+    c.animate([
+      {transform:'translate(0,0) rotate(0)',opacity:1},
+      {transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`,opacity:0}
+    ],{duration:1100+Math.random()*500,easing:'cubic-bezier(.2,.8,.4,1)'});
+    setTimeout(()=>c.remove(),1700);
+  }
+}
+
+/* ============================================================
+   FIREWORKS
+   ============================================================ */
+function spawnFireworkAt(x,y,isCorrect){
+  const colors = isCorrect? ['#2ecc71','#f9d423','#4facfe','#00f2fe','#ff6b9d'] : ['#ff5e62','#ff9a9e','#feca57','#ee5253'];
+  const n=22;
+  for(let i=0;i<n;i++){
+    const p=document.createElement('div');
+    p.className='fw';
+    p.style.left=x+'px';
+    p.style.top=y+'px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.boxShadow=`0 0 8px ${colors[Math.floor(Math.random()*colors.length)]}`;
+    document.body.appendChild(p);
+    const angle=(Math.PI*2*i)/n + Math.random()*0.3;
+    const dist=80+Math.random()*100;
+    const dx=Math.cos(angle)*dist;
+    const dy=Math.sin(angle)*dist;
+    p.animate([
+      {transform:'translate(0,0) scale(1)',opacity:1},
+      {transform:`translate(${dx}px,${dy}px) scale(0)`,opacity:0}
+    ],{duration:900+Math.random()*400,easing:'cubic-bezier(.2,.8,.2,1)'});
+    setTimeout(()=>p.remove(),1400);
+  }
+}
+function spawnFireworkBurst(){
+  // Multiple fireworks from center
+  const cx=window.innerWidth/2;
+  const cy=window.innerHeight/2;
+  for(let k=0;k<3;k++){
+    setTimeout(()=>spawnFireworkAt(cx+(Math.random()*200-100), cy+(Math.random()*150-75), true), k*250);
+  }
+}
+function spawnEmojiBurst(isCorrect){
+  const emojis = isCorrect? ['🎉','🎊','✨','🌟','🎈'] : ['💡','📚','💪','🤔','✏️'];
+  const cx=window.innerWidth/2;
+  const cy=window.innerHeight/2-50;
+  for(let i=0;i<14;i++){
+    const p=document.createElement('div');
+    p.className='fx-particle';
+    p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.left=(cx+(Math.random()*300-150))+'px';
+    p.style.top=cy+'px';
+    p.style.fontSize=(1.5+Math.random()*1.5)+'rem';
+    p.style.animationDelay=(i*0.05)+'s';
+    p.style.animationDuration='1.6s';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),1800);
+  }
+}
+
+/* ============================================================
+   BIG CONFETTI (on pass)
+   ============================================================ */
+function bigConfetti(){
+  const colors=['#4facfe','#00f2fe','#2ecc71','#f9d423','#ff6b9d','#9b59b6','#ff5e62'];
+  for(let i=0;i<80;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    const dur=2+Math.random()*2;
+    c.animate([
+      {transform:`translateY(-20px) rotate(0deg)`,opacity:1},
+      {transform:`translateY(${window.innerHeight+40}px) rotate(${720+Math.random()*720}deg)`,opacity:0.9}
+    ],{duration:dur*1000,easing:'cubic-bezier(.4,0,1,1)'});
+    setTimeout(()=>c.remove(),dur*1000+200);
+  }
+}
+
+/* ============================================================
+   STUDY MODE
+   ============================================================ */
+function openStudyMode(){
+  $('setupPanel').style.display='none';
+  $('testArea').style.display='none';
+  $('results').style.display='none';
+  $('studyArea').style.display='block';
+
+  // Build filters
+  const f=$('studyFilters');
+  f.innerHTML='';
+  const topics=[['all','All topics'],['L1',TOPIC_META.L1.label],['L2',TOPIC_META.L2.label],['W3',TOPIC_META.W3.label],['W4',TOPIC_META.W4.label],['W5',TOPIC_META.W5.label]];
+  topics.forEach(([k,label])=>{
+    const b=document.createElement('button');
+    b.textContent=label;
+    if(k===State.studyFilter) b.classList.add('active');
+    b.addEventListener('click',()=>{
+      State.studyFilter=k;
+      [...f.children].forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      renderStudy();
+    });
+    f.appendChild(b);
+  });
+
+  $('studySearch').oninput=renderStudy;
+  renderStudy();
+  if(State.config.smooth) window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderStudy(){
+  const c=$('studyContainer');
+  c.innerHTML='';
+  const kw=$('studySearch').value.trim().toLowerCase();
+  const list = QUESTIONS.filter(q=>{
+    if(State.studyFilter!=='all' && q.topic!==State.studyFilter) return false;
+    if(kw && !(q.q.toLowerCase().includes(kw) || q.explain.toLowerCase().includes(kw))) return false;
+    return true;
+  });
+  if(list.length===0){
+    c.innerHTML='<p class="muted">No questions match.</p>';
+    return;
+  }
+  list.forEach(q=>{
+    const m=TOPIC_META[q.topic];
+    const card=document.createElement('div');
+    card.className='study-card';
+    const correctLetter=String.fromCharCode(65+q.answer);
+    card.innerHTML=`
+      <div class="stitle" style="color:${m.color}">${m.label}</div>
+      <div class="sq">${q.q}</div>
+      <div class="sa"><b>Correct answer (${correctLetter}):</b> ${q.options[q.answer]}</div>
+      <div class="sa" style="background:#f8fbff;border-left-color:var(--accent);margin-top:6px"><b style="color:var(--primary)">Explanation:</b> ${q.explain}</div>`;
+    c.appendChild(card);
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded',()=>{
+  bindSetup();
+  // Total count display
+  const totalQ=QUESTIONS.length;
+  // Append small badge with total
+  const hint=document.createElement('div');
+  hint.className='muted';
+  hint.style.textAlign='center';
+  hint.style.marginTop='8px';
+  hint.textContent=`Total question bank: ${totalQ} MCQs across 5 topics`;
+  document.querySelector('#setupPanel .controls').after(hint);
+});
+</script>
+</body>
+</html>
